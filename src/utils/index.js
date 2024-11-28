@@ -12,3 +12,4 @@ export const JWTStorage = {
 		localStorage.removeItem(SESSION_TOKEN);
 	},
 };
+
