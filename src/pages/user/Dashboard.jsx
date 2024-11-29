@@ -8,9 +8,11 @@ import  useFetchProduct from '../../hooks/useFetchProduct';
 const Dashboard = () => {
 const  { products, isLoading } = useFetchProduct();
 
+
+
+
   return (
     <div>
-    
          <StoreHeader />
          <ProductBanner/>
          {isLoading ?
@@ -20,7 +22,7 @@ const  { products, isLoading } = useFetchProduct();
               <Row gutter={16}>
                 {
                     products.map(product => (
-                        <Col className="gutter-row" span={4}>
+                        <Col key={product.id} className="gutter-row" span={4}>
                             <ProductCard key={product.id} product={product}/>
                         </Col>
                     ))
