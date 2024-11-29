@@ -8,7 +8,7 @@ export default function useFetchProduct() {
 
     const fetchProducts = async () => {
         try {
-            const response = await axios.get('https://fakestoreapi.com/products?limit=12');
+            const response = await axios.get('https://fakestoreapi.com/products?limit=18');
             setProducts(response.data);
             setIsLoading(false)
         } catch (error) {

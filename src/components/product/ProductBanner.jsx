@@ -1,6 +1,6 @@
 import React from 'react'
 import { Carousel } from 'antd';
-import banner_1 from '../../assets/images/banners/banner_1.png';
+import banner_1 from '../../assets/images/banners/banner_1.jpg';
 
 
 
