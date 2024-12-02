@@ -1,15 +1,14 @@
-import React from 'react'
-import { StoreFooter, StoreHeader } from '../components'
-import { Outlet } from 'react-router-dom'
+import { Outlet } from 'react-router-dom';
+import { StoreFooter, StoreHeader } from '../components';
 
 const StoreLayout = () => {
-  return (
-    <div>
-        <StoreHeader />
-            <Outlet />
-        <StoreFooter />
-    </div>
-  )
-}
+	return (
+		<div>
+			<StoreHeader />
+			<Outlet />
+			<StoreFooter />
+		</div>
+	);
+};
 
-export default StoreLayout
+export default StoreLayout;
