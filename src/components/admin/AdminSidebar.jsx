@@ -45,7 +45,7 @@ const AdminSidebar = () => {
             className='tw-bg-blue-600 border-r'
             trigger={null}
         >
-            <div className='flex h-16 items-center justify-center border-b'>
+            <div className='tw-flex tw-h-16 tw-items-center tw-justify-center tw-border-b'>
                 <h1
                     className={`text-2xl font-bold ${
                         collapsed ? 'hidden' : ''
@@ -62,7 +62,7 @@ const AdminSidebar = () => {
                 ))}
             </Menu>
             <div
-                className='absolute bottom-4 right-4 cursor-pointer'
+                className='tw-absolute tw-bottom-4 tw-right-4 tw-cursor-pointer'
                 onClick={() => setCollapsed(!collapsed)}
             >
                 {collapsed ? <MenuIcon /> : <ChevronLeft />}
