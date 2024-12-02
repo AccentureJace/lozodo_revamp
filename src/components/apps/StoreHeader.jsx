@@ -1,13 +1,27 @@
 import React from 'react'
-import { Col, Row, Input } from 'antd';
+import { Col, Row, Input, Badge, Dropdown, Space, Button } from 'antd';
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { FiUser } from "react-icons/fi";
 import lozodo_logo from "../../assets/images/lozodo_logo.png";
+import { FaEdit } from "react-icons/fa";
 
 const StoreHeader = () => {
+
+	const items = [
+		{
+		  label: <Button type="primary"> <FiUser className='tw-text-sm tw-text-white' />Sign-in</Button>,
+		  key: '0',
+		},
+		{
+		  label:  <Button color="default" variant="text"> <FaEdit className='tw-text-sm tw-text-black' /> Sign-up </Button>,
+		  key: '1',
+		},
+	  ];
+
+
   return (
     <div className='flex'>
-			<Row className='tw-bg-blue-600 tw-py-3 tw-px-5'>
+			<Row className='tw-bg-blue-600 tw-py-3'>
 				<Col className="gutter-row" span={4}>
 					<div>
 						<img src={lozodo_logo} className='tw-h-10' alt="Logo" />
@@ -20,10 +34,22 @@ const StoreHeader = () => {
 						</div>
 				</Col>
 
-				<Col className="gutter-row" span={2}>
+				<Col className="gutter-row tw-mt-2" span={2}>
 						<div className='tw-flex tw-justify-end tw-gap-3 '>
-							<FiUser className='tw-text-3xl tw-text-white' />
-							<AiOutlineShoppingCart className='tw-text-3xl tw-text-white' />
+							<Dropdown
+								menu={{
+								items,
+								}}
+								trigger={['click']}>
+								<a onClick={(e) => e.preventDefault()}>
+								<Space>
+									<FiUser className='tw-text-3xl tw-text-white' />
+								</Space>
+								</a>
+							</Dropdown>
+							<Badge count={0} showZero>
+								<AiOutlineShoppingCart className='tw-text-3xl tw-text-white' />
+							</Badge>
 						</div>
 				</Col>
 			</Row>
