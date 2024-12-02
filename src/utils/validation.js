@@ -22,13 +22,13 @@ const validateObject = (obj) => {
 			result[key] = `This field cannot be empty`;
 		}
 
-		if (key.includes('phone') || key.includes('contact')) {
+		if (key.toLowerCase().includes('phone') || key.includes('contact')) {
 			if (!isValidPhone(value)) {
 				result[key] = 'Must be 11-digit that starts with 09';
 			}
 		}
 
-		if (key.includes('password')) {
+		if (key.toLowerCase().includes('password')) {
 			if (!isStrongPassword(value)) {
 				result[key] = 'Password must have atleast 10 characters, 1 special character, 3 numbers and 1 uppercase';
 			}
