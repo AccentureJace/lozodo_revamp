@@ -3,6 +3,7 @@ import { Card, Button } from 'antd';
 import { FaCartPlus } from "react-icons/fa6";
 import PRODUCT_IMAGE from '../../assets/images/product_1.webp'
 
+
 const ProductCard = ({ product }) => {
   return (
     <div>
@@ -30,11 +31,8 @@ const ProductCard = ({ product }) => {
             }}>
             {product.title}
           </p>
-          <div className='tw-flex tw-justify-between tw-items-center'>
-            <p className="tw-text-red-500 tw-text-xl">₱{product.price}</p>
-            <p className="tw-text-xs tw-pe-3 tw-font-bold">16k sold</p>
-          </div>
-         
+          <p className="tw-text-xs tw-pe-3 tw-font-mono">16k sold</p>
+          <p className="tw-text-red-500 tw-text-xl">₱{product.price}</p>
         </div>
       </Card>
     </div>
