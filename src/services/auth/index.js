@@ -1,12 +1,12 @@
-import { axios } from '../axios';
-import { JWTStorage } from '../utils';
+import { axios } from '../../axios';
+import { JWTStorage } from '../../utils';
 import {
 	PATH_LOGIN,
 	PATH_LOGOUT,
 	PATH_REGISTER,
 	PATH_RESET_PASSWORD,
 	PATH_VERIFY_USERNAME,
-} from '../constants/service';
+} from '../../constants/service';
 
 const authService = {
 	login: async (login_details) => {
