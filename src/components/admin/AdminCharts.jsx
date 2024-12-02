@@ -21,7 +21,6 @@ const AdminCharts = () => {
         yField: 'total',
         color: '#0095FF',
         label: {
-            position: 'middle',
             style: {
                 fill: '#FFFFFF',
                 opacity: 0.6,
@@ -42,7 +41,6 @@ const AdminCharts = () => {
         colorField: 'type',
         radius: 0.8,
         label: {
-            type: 'outer',
             content: '{name} {percentage}',
         },
         interactions: [
@@ -59,12 +57,12 @@ const AdminCharts = () => {
         <Row gutter={16}>
             <Col span={16}>
                 <Card>
-                    <Column {...columnConfig} />
+                    <Column {...columnConfig} width={700} />
                 </Card>
             </Col>
             <Col span={8}>
                 <Card>
-                    <Pie {...pieConfig} />
+                    <Pie {...pieConfig} width={400} />
                 </Card>
             </Col>
         </Row>

@@ -11,7 +11,7 @@ const AdminHeader = () => {
                 welcome Felix!
             </Title>
             <div className='tw-flex tw-items-center gap-4'>
-                <div className='tw-flex tw-items-center gap-2'>
+                <div className='tw-flex tw-items-center tw-gap-2 tw-mr-4'>
                     <Avatar icon={<Person />} />
                     <span className='tw-text-sm tw-font-medium'>
                         Felix Angelo Siena

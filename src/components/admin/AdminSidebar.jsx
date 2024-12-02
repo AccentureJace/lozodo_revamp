@@ -1,7 +1,5 @@
-'use client';
-
 import { useState } from 'react';
-import { Layout, Menu } from 'antd';
+import { Layout, Menu, Button, Flex } from 'antd';
 import {
     Dashboard,
     People,
@@ -11,30 +9,44 @@ import {
     ChevronLeft,
 } from '@mui/icons-material';
 import MenuIcon from '@mui/icons-material/Menu';
-import { Link } from 'react-router-dom';
+import lozodo_logo from '../../assets/images/lozodo_logo.png';
 
 const { Sider } = Layout;
 
-const menuItems = [
-    { icon: Dashboard, label: 'Dashboard', key: '/', href: '/' },
-    { icon: People, label: 'Users', key: '/users', href: '/' },
-    { icon: Inventory, label: 'Products', key: '/products', href: '/' },
+const items = [
     {
-        icon: Category,
-        label: 'Categories',
-        key: '/categories',
-        href: '/',
+        key: '/admin',
+        icon: <Dashboard />,
+        label: 'Dashboard',
     },
     {
-        icon: BarChart,
+        key: '/admin/users',
+        icon: <People />,
+        label: 'Users',
+    },
+    {
+        key: '/admin/products',
+        icon: <Inventory />,
+        label: 'Products',
+    },
+    {
+        key: '/admin/categories',
+        icon: <Category />,
+        label: 'Categories',
+    },
+    {
+        key: '/admin/transactions',
+        icon: <BarChart />,
         label: 'Transactions',
-        key: '/transactions',
-        href: '/',
     },
 ];
 
 const AdminSidebar = () => {
     const [collapsed, setCollapsed] = useState(false);
+
+    const toggleCollapsed = () => {
+        setCollapsed(!collapsed);
+    };
 
     return (
         <Sider
@@ -45,28 +57,26 @@ const AdminSidebar = () => {
             className='tw-bg-blue-600 border-r'
             trigger={null}
         >
-            <div className='tw-flex tw-h-16 tw-items-center tw-justify-center tw-border-b'>
-                <h1
-                    className={`text-2xl font-bold ${
-                        collapsed ? 'hidden' : ''
-                    }`}
+            <Flex className='tw-flex tw-h-16 tw-items-center tw-justify-center tw-border-b'>
+                <img src={lozodo_logo} className='tw-h-10' alt='Logo' />
+            </Flex>
+            <Flex justify='end' className='tw-mt-2 tw-mr-2'>
+                <Button
+                    type='primary'
+                    onClick={toggleCollapsed}
+                    className='tw-flex tw-mb-2 tw-justify-end'
                 >
-                    LOZODO
-                </h1>
-            </div>
-            <Menu mode='inline' className='tw-bg-blue-600 tw-h-full'>
-                {menuItems.map((item) => (
-                    <Menu.Item key={item.key} icon={<item.icon />}>
-                        <Link href={item.href}>{item.label}</Link>
-                    </Menu.Item>
-                ))}
-            </Menu>
-            <div
-                className='tw-absolute tw-bottom-4 tw-right-4 tw-cursor-pointer'
-                onClick={() => setCollapsed(!collapsed)}
-            >
-                {collapsed ? <MenuIcon /> : <ChevronLeft />}
-            </div>
+                    {collapsed ? <MenuIcon /> : <ChevronLeft />}
+                </Button>
+            </Flex>
+            <Menu
+                defaultSelectedKeys={['/admin']}
+                mode='inline'
+                inlineCollapsed={collapsed}
+                items={items}
+                theme='dark'
+                className='tw-bg-blue-600 tw-h-full'
+            />
         </Sider>
     );
 };

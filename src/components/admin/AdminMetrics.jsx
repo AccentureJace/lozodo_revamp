@@ -5,7 +5,7 @@ const AdminMetrics = () => {
     return (
         <Row gutter={16}>
             <Col span={8}>
-                <Card>
+                <Card className='tw-p-10'>
                     <Statistic
                         title='Total Sales'
                         value={200}
@@ -14,7 +14,7 @@ const AdminMetrics = () => {
                 </Card>
             </Col>
             <Col span={8}>
-                <Card>
+                <Card className='tw-p-10'>
                     <Statistic
                         title='Active Users'
                         value={500}
@@ -23,7 +23,7 @@ const AdminMetrics = () => {
                 </Card>
             </Col>
             <Col span={8}>
-                <Card>
+                <Card className='tw-p-10'>
                     <Statistic
                         title='Inactive Users'
                         value={100}
