@@ -13,7 +13,7 @@ const isEmpty = (str) => {
 	return str == '';
 };
 
-const validateObject = (obj) => {
+export const validateObject = (obj) => {
 	let result = {};
 
 	for (const [key, value] of Object.entries(obj)) {
