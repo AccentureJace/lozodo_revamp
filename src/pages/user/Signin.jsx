@@ -1,40 +1,28 @@
 import React, { useState } from 'react';
 import { Divider, Flex } from 'antd';
-import Icon from '../../assets/images/SignIn Icon.svg';
-import authService from '../../services/auth';
-import { Bounce, ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { ENDPOINTS } from '../../routes/endpoints';
-import AuthForm from '../../components/auth/AuthForm';
+import { AuthForm } from '../../components';
+import authService from '../../services/auth';
+import { INPUT_FIELDS } from '../../constants/auth';
+import { Bounce, ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import Icon from '../../assets/images/sign-in_icon.svg';
 
 const Signin = () => {
     const navigate = useNavigate();
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [error, setError] = useState({ username: '', password: '' });
     const [formData, setFormData] = useState({
         username: '',
         password: '',
     });
-    const inputFields = [
-        {
-            label: 'Username',
-            name: 'username',
-            type: 'text',
-            placeholder: 'Enter username...',
-        },
-        {
-            label: 'Password',
-            name: 'password',
-            type: 'password',
-            placeholder: 'Enter password...',
-        },
-    ];
-    const handleSignInChange = (event) => {
+    const handleChangeInput = (event) => {
         const { name, value } = event.target;
         setFormData({ ...formData, [name]: value });
     };
 
-    const handleSignInSubmit = async (values) => {
+    const handleSubmitForm = async (values) => {
         setIsSubmitting(true);
 
         const loginData = {
@@ -43,21 +31,23 @@ const Signin = () => {
         };
 
         try {
-            const res = await authService.login(loginData);
-            if (res.status === 200) {
-                console.log('Login successful:', res);
+            const response = await authService.login(loginData);
+            if (response.status === 200) {
+                console.log('Login successful:', response);
 
                 setTimeout(() => {
                     navigate('/');
                 }, 1500);
                 toast.success('Login successful!');
             }
-            if (res.status === 401) {
-                console.log('Login failed:', res.status.message);
-                toast.error('Username or password is incorrect');
+            if (response.status === 401) {
+                console.log('Login failed:', response.status.message);
+                setError({ general: 'Username or password is incorrect' });
             } else {
-                console.log('Login failed with status:', res.status);
-                toast.error('An error occurred. Please try again later.');
+                console.log('Login failed with status:', response.status);
+                setError({
+                    general: 'An error occurred. Please try again later.',
+                });
             }
         } catch (error) {
             console.error('Login failed:', error.message);
@@ -79,10 +69,13 @@ const Signin = () => {
                     <img src={Icon} alt='icon' className='tw-w-8 md:tw-w-9' />
                 </Flex>
                 <Divider />
+                {error.general && (
+                    <p className='tw-text-red-500 tw-px-2'>{error.general}</p>
+                )}
                 <AuthForm
-                    fields={inputFields}
-                    handleChange={handleSignInChange}
-                    handleSubmit={handleSignInSubmit}
+                    fields={INPUT_FIELDS}
+                    handleChange={handleChangeInput}
+                    handleSubmit={handleSubmitForm}
                     isSignIn={true}
                     isSubmitting={isSubmitting}
                 />

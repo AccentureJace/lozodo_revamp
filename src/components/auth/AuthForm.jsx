@@ -25,7 +25,7 @@ const AuthForm = ({
                             message: 'Please enter valid input',
                         },
                     ]}
-                    className='tw-mt-8'
+                    className='tw-mt-5'
                 >
                     <Input
                         type={field.type}
