@@ -1,4 +1,4 @@
-import { SESSION_TOKEN } from '../constants/common';
+import { EMPTY_FIELD_ERROR, INVALID_PASSWORD_ERROR, INVALID_PHONE_NUMBER_ERROR, SESSION_TOKEN } from '../constants/common';
 export const JWTStorage = {
 	getToken: () => {
 		return localStorage.getItem(SESSION_TOKEN);
@@ -15,35 +15,35 @@ export const JWTStorage = {
 export const validateObject = (obj) => {
 	let result = {};
 
-	const isValidPhone = (str) => {
-		const phonePattern = /09\d{9}$/;
-		return phonePattern.test(str);
+	const isValidPhone = (phone_number) => {
+		const phone_pattern = /09\d{9}$/;
+		return phone_pattern.test(phone_number);
 	};
 
-	const isStrongPassword = (str) => {
-		const passwordPattern = /^(?=(.*[A-Z])(?=.*?[a-z])(?=(.*[0-9]){3,})(?=.*?[#?!@$%^&*-])).{10,}$/;
-		return passwordPattern.test(str);
+	const isStrongPassword = (password) => {
+		const password_pattern = /^(?=(.*[A-Z])(?=.*?[a-z])(?=(.*[0-9]){3,})(?=.*?[#?!@$%^&*-])).{10,}$/;
+		return password_pattern.test(password);
 	};
 
-	const isEmpty = (str) => {
-		return str == '';
+	const isEmpty = (field) => {
+		return field == '';
 	};
 
 	for (const [key, value] of Object.entries(obj)) {
 		if (key.toLowerCase().includes('phone') || key.includes('contact')) {
 			if (!isValidPhone(value)) {
-				result[key] = 'Must be 11-digit that starts with 09';
+				result[key] = INVALID_PHONE_NUMBER_ERROR;
 			}
 		}
 
 		if (key.toLowerCase().includes('password')) {
 			if (!isStrongPassword(value)) {
-				result[key] = 'Password must have atleast 10 characters, 1 special character, 3 numbers and 1 uppercase';
+				result[key] = INVALID_PASSWORD_ERROR;
 			}
 		}
 
 		if (isEmpty(value)) {
-			result[key] = `This field cannot be empty`;
+			result[key] = EMPTY_FIELD_ERROR;
 		}
 	}
 
