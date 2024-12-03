@@ -1,22 +1,24 @@
-import React from 'react'
-import { Carousel } from 'antd';
-import banner_1 from '../../assets/images/banners/banner_1.jpg';
-
-
-
+import { Row, Col, Carousel } from 'antd';
+import { banner_1 } from '../../assets/images';
 
 const ProductBanner = () => {
-  return (
-    <div>
-       <Carousel autoplay>
-            <div>
-                <img style={{maxWidth:'100%', objectFit:"cover"}} alt="example" src={banner_1} />
-            </div>
-        </Carousel>
-    </div>
-  )
-}
+	return (
+		<div className='tw-pb-5'>
+			<Row>
+				<Col span={24}>
+					<Carousel autoplay>
+						<div>
+							<img
+								style={{ maxWidth: '100%', objectFit: 'cover' }}
+								alt='example'
+								src={banner_1}
+							/>
+						</div>
+					</Carousel>
+				</Col>
+			</Row>
+		</div>
+	);
+};
 
-
-
-export default ProductBanner
+export default ProductBanner;
