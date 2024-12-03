@@ -1,25 +1,25 @@
 import { createBrowserRouter } from 'react-router-dom';
 import Dashboard from '../pages/user/Dashboard';
 import ProductDetails from '../pages/user/ProductDetails';
-import { StoreLayout } from '../layout';
-import { ENDPOINTS } from './endpoints';
 import Cart from '../pages/user/Cart';
+import { StoreLayout } from '../layout';
+import { PRODUCT_DASHBOARD, PRODUCT_DETAILS, CART } from '../constants/routes';
 
 export const router = createBrowserRouter([
 	{
-		path: '/',
+		path: PRODUCT_DASHBOARD,
 		element: <StoreLayout />,
 		children: [
 			{
-				path: ENDPOINTS.PRODUCT_DASHBOARD,
+				path: PRODUCT_DASHBOARD,
 				element: <Dashboard />,
 			},
 			{
-				path: ENDPOINTS.PRODUCT_DETAILS,
+				path: PRODUCT_DETAILS,
 				element: <ProductDetails />,
 			},
 			{
-				path: ENDPOINTS.CART,
+				path: CART,
 				element: <Cart />,
 			},
 		],
