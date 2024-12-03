@@ -3,6 +3,7 @@ import { Button, Divider, Flex, Form, Input, Spin } from 'antd';
 import { RiLock2Line } from 'react-icons/ri';
 import { Link, useNavigate } from 'react-router-dom';
 import { authService } from '../../services';
+import { PRODUCT_DASHBOARD } from '../../constants/routes';
 
 const Signin = () => {
     const navigate = useNavigate();
@@ -29,7 +30,7 @@ const Signin = () => {
             const response = await authService.login(loginData);
             if (response.status === 200) {
                 setTimeout(() => {
-                    navigate('/');
+                    navigate({ PRODUCT_DASHBOARD });
                 }, 1500);
                 toast.success('Login successful!');
             }
@@ -53,7 +54,7 @@ const Signin = () => {
             <section className='tw-absolute tw-w-[350px] tw-h-[500px] md:tw-w-[600px] md:tw-h-[550px] tw-bg-blue-600 tw-rounded-xl tw--rotate-[170deg] tw-border tw-border-gray-600'></section>
             <section className='tw-absolute tw-px-5 tw-py-10 md:tw-p-14 tw-w-[350px] md:tw-w-[600px] tw-h-auto tw-rounded-xl tw-border tw-border-gray-400 tw-bg-white'>
                 <Flex justify='space-between'>
-                    <div className='tw-font-extrabold tw-px-2'>
+                    <div className='tw-font-extrabold'>
                         <h1 className='tw-text-3xl'>Lozodo</h1>
                         <p>Skip the rest, Just add to cart</p>
                     </div>
@@ -63,6 +64,7 @@ const Signin = () => {
                 <Form layout='vertical' onFinish={handleSubmitForm}>
                     <Form.Item
                         label='Username'
+                        name='username'
                         rules={[
                             {
                                 required: true,
@@ -73,21 +75,20 @@ const Signin = () => {
                     >
                         <Input
                             type='text'
-                            name='username'
                             onChange={handleChangeInput}
                             variant='filled'
                             placeholder='Enter username...'
                             className='tw-px-5 tw-py-3'
                         />
-                        {error.username && (
-                            <p className='tw-text-red-500 tw-px-5 tw-text-sm'>
-                                {error.username}
-                            </p>
-                        )}
                     </Form.Item>
-
+                    {error.username && (
+                        <p className='tw-text-red-500 tw-text-sm'>
+                            {error.username}
+                        </p>
+                    )}
                     <Form.Item
                         label='Password'
+                        name='password'
                         rules={[
                             {
                                 required: true,
@@ -99,16 +100,15 @@ const Signin = () => {
                         <Input.Password
                             onChange={handleChangeInput}
                             variant='filled'
-                            name='password'
                             placeholder='Enter password...'
                             className='tw-px-5 tw-py-3'
                         />
-                        {error.password && (
-                            <p className='tw-text-red-500 tw-px-5 tw-text-sm'>
-                                {error.password}
-                            </p>
-                        )}
                     </Form.Item>
+                    {error.password && (
+                        <p className='tw-text-red-500 tw-text-sm'>
+                            {error.password}
+                        </p>
+                    )}
                     <Form.Item>
                         <Link className='tw-italic tw-float-end tw-text-base'>
                             Forgot Password
