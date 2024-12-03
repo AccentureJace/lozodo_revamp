@@ -1,6 +1,4 @@
 import { Card } from 'antd';
-import { PESO_SIGN } from '../../constants/common';
-import { product_1 as PRODUCT_IMAGE } from '../../assets/images';
 
 const ProductCard = ({ product }) => {
 	return (
@@ -11,8 +9,8 @@ const ProductCard = ({ product }) => {
 				cover={
 					<div className='tw-py-5'>
 						<img
-							alt='product'
-							src={PRODUCT_IMAGE}
+							alt={product.product_name}
+							src={product.product_img}
 							className='tw-h-32 tw-w-96 tw-object-contain'
 						/>
 					</div>
@@ -29,11 +27,13 @@ const ProductCard = ({ product }) => {
 							textOverflow: 'ellipsis',
 						}}
 					>
-						{product.title}
+						{product.product_name}
 					</p>
-					<p className='tw-text-xs tw-pe-3 tw-font-mono'>16k sold</p>
+					<p className='tw-text-xs tw-pe-3 tw-font-mono'>
+						{product.sold} sold
+					</p>
 					<p className='tw-text-red-500 tw-text-xl'>
-						{PESO_SIGN} &nbsp;{product.price.toFixed(2)}
+						{product.price}
 					</p>
 				</div>
 			</Card>

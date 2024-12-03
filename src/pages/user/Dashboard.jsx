@@ -19,15 +19,15 @@ const Dashboard = () => {
 					<Row gutter={16}>
 						{products.map((product) => (
 							<Col
-								key={product.id}
+								key={product.product_id}
 								className='gutter-row'
 								span={4}
 								onClick={() =>
-									navigate(`/product/${product.id}`)
+									navigate(`/product/${product.product_id}`)
 								}
 							>
 								<ProductCard
-									key={product.id}
+									key={product.product_id}
 									product={product}
 								/>
 							</Col>
