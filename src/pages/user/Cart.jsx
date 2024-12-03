@@ -1,6 +1,6 @@
-import { CartCard, CartSummary } from '../../components/cart';
 import { Checkbox, Typography } from 'antd';
 import { AiFillDelete } from 'react-icons/ai';
+import { CartCard, CartSummary } from '../../components';
 
 const Cart = () => {
 	return (
