@@ -7,15 +7,15 @@ const productService = {
 			const result = await axios.get(PATH_PRODUCTS);
 			return result.data.data;
 		} catch (error) {
-			return error;
+			return error.response;
 		}
 	},
 	getProductById: async (product_id) => {
 		try {
 			const result = await axios.get(`${PATH_PRODUCTS}/${product_id}`);
-			return result.data;
+			return result.data.data;
 		} catch (error) {
-			return error;
+			return error.response;
 		}
 	},
 	createProduct: async (product_details) => {
