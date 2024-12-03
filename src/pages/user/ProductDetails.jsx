@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Col, Row, Card, Button, Divider } from 'antd';
 import { CgArrowsExchangeAlt } from 'react-icons/cg';
 import { FaPlus, FaMinus } from 'react-icons/fa';
@@ -5,10 +6,26 @@ import { GiShoppingBag, GiShieldDisabled } from 'react-icons/gi';
 import { ImCart } from 'react-icons/im';
 import { TbTruckReturn } from 'react-icons/tb';
 import { useParams } from 'react-router-dom';
-import { product_1 as PRODUCT_IMAGE } from '../../assets/images';
+import { useProductHooks } from '../../hooks';
 
 const ProductDetails = () => {
 	const { id } = useParams();
+	const { selectedProduct, fetchProductById } = useProductHooks();
+
+	useEffect(() => {
+		if (!id) return;
+		fetchProductById(id);
+	}, [id]);
+
+	const {
+		product_img,
+		product_name,
+		sold,
+		category,
+		price,
+		product_description,
+	} = selectedProduct;
+
 	return (
 		<div className='tw-py-10 tw-px-10'>
 			<Row>
@@ -17,22 +34,27 @@ const ProductDetails = () => {
 						<Row>
 							<Col span={9}>
 								<img
-									alt='product'
-									src={PRODUCT_IMAGE}
+									alt={product_name}
+									src={product_img}
 									className=' tw-w-96 tw-object-fill tw-p-5'
 								/>
 							</Col>
 							<Col span={10} className='tw-py-5 tw-px-3'>
 								<p className='tw-text-2xl tw-font-bold'>
-									BOSS BOSSING Unisex Cotton T-Shirt -
-									Comfortable & Stylish Casual Wear
+									{product_name}
 								</p>
-								<p>81.k Sold</p>
+								<p>{sold} Sold</p>
 								<p className='tw-pt-5'>
-									Category: <span>Children Toys</span>
+									Category:{' '}
+									<span>
+										{category &&
+											category.map((categ) => {
+												return categ.category_name;
+											})}
+									</span>
 								</p>
 								<p className='tw-text-4xl tw-text-red-500'>
-									₱168
+									{price}
 								</p>
 								<div className='tw-pt-10 tw-flex tw-gap-3'>
 									<p className='tw-text-md tw-pt-1'>
@@ -63,15 +85,7 @@ const ProductDetails = () => {
 						<p className='tw-text-xl tw-font-bold'>
 							Product Details
 						</p>
-						<p className='tw-pl-2'>
-							Lorem ipsum dolor sit amet consectetur adipisicing
-							elit. Ab voluptatem totam libero error facere
-							officia vel quod voluptate, nostrum, culpa nam eius
-							quas aliquid nisi ex veniam aperiam aut optio magni
-							iste quo quam. Laboriosam eveniet molestiae in porro
-							minus pariatur rerum. Voluptates aperiam et fugiat,
-							pariatur sequi sunt iste?
-						</p>
+						<p className='tw-pl-2'>{product_description}</p>
 						<Divider />
 						<p className='tw-text-lg tw-font-bold'>
 							Return & Warranty

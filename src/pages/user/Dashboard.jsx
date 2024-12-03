@@ -1,10 +1,10 @@
 import { Col, Row, Spin } from 'antd';
 import { useNavigate } from 'react-router';
 import { ProductCard, ProductBanner } from '../../components';
-import useFetchProduct from '../../hooks/useFetchProduct';
+import { useProductHooks } from '../../hooks';
 
 const Dashboard = () => {
-	const { products, isLoading } = useFetchProduct();
+	const { products, isLoading } = useProductHooks();
 	let navigate = useNavigate();
 
 	return (
