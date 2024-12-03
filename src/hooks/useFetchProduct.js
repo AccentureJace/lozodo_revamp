@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+import productService from '../services/product';
+import { handleFormatAmountToPHP } from '../utils';
 
 export default function useFetchProduct() {
 	const [products, setProducts] = useState();
@@ -7,10 +8,15 @@ export default function useFetchProduct() {
 
 	const fetchProducts = async () => {
 		try {
-			const response = await axios.get(
-				'https://fakestoreapi.com/products?limit=18'
-			);
-			setProducts(response.data);
+			const response = await productService.getAllProducts();
+			const allProducts = response.products.map((product) => {
+				return {
+					...product,
+					price: handleFormatAmountToPHP(product.price),
+					//decode image from base64
+				};
+			});
+			setProducts(allProducts);
 			setIsLoading(false);
 		} catch (error) {
 			console.error(error);
