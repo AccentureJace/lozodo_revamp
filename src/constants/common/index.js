@@ -9,5 +9,3 @@ export const HEADER_GROUP_ID = 'x-request-id';
 export const LOZODO_ADDRESS = 'Cybergate Tower 1, Mandaluyong City';
 export const LOZODO_NUMBER = '(+63) 997-162-0530';
 export const LOZODO_EMAIL = 'lozodosupport@gmail.com';
-
-export const PESO_SIGN = '₱';
