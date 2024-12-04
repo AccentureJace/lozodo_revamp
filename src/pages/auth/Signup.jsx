@@ -33,20 +33,20 @@ const Signup = () => {
             const registerData = {
                 first_name: values.first_name,
                 last_name: values.last_name,
-                contact_number: values.contact_number,
                 address: values.address,
+                contact_number: values.contact_number,
                 username: values.username,
                 password: values.password,
             };
             const response = await authService.register(registerData);
-            if (response.status === 200) {
+            if (response.message === 'User registered successfully') {
                 form.resetFields();
                 setTimeout(() => {
-                    navigate({ PATH_LOGIN });
+                    navigate(PATH_LOGIN);
                 }, 1500);
-                toast.success('Register successful!');
+                toast.success(response.message);
             } else {
-                toast.error('An error occurred. Please try again later.');
+                toast.error(response.response.data.error.message);
             }
         } catch (error) {
             toast.error(`Registration failed: ${error.message}`);

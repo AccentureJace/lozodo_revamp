@@ -20,19 +20,34 @@ const Signin = () => {
                 password: values.password,
             };
             const response = await authService.login(loginData);
-            if (response.status === 200) {
+            if (response.message === 'Successfully logged in') {
+                form.resetFields();
                 setTimeout(() => {
-                    navigate({ PRODUCT_DASHBOARD });
+                    navigate(PRODUCT_DASHBOARD);
                 }, 1500);
-                toast.success('Login successful!');
-            } else if (response.status === 401) {
+                toast.success(response.message);
+            } else if (
+                response.response.data.error.message === 'Invalid Username'
+            ) {
                 form.setFields([
-                    { name: 'username', errors: ['Incorrect username'] },
-                    { name: 'password', errors: ['Incorrect password'] },
+                    {
+                        name: 'username',
+                        errors: [response.response.data.error.message],
+                    },
+                ]);
+            } else if (
+                response.response.data.error.message === 'Invalid password'
+            ) {
+                form.setFields([
+                    {
+                        name: 'password',
+                        errors: [response.response.data.error.message],
+                    },
                 ]);
             } else {
-                toast.error('An error occurred. Please try again later.');
+                toast.error(response.response.data.error.message);
             }
+            console.log(response);
         } catch (error) {
             toast.error(`Login failed: ${error.message}`);
         } finally {
