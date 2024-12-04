@@ -1,21 +1,21 @@
-import { axios } from '../customAxios';
+import { axios } from '../../axios';
 import { PATH_PRODUCTS } from '../../constants/service';
 
 const productService = {
 	getAllProducts: async () => {
 		try {
 			const result = await axios.get(PATH_PRODUCTS);
-			return result.data;
+			return result.data.data;
 		} catch (error) {
-			return error;
+			return error.response;
 		}
 	},
 	getProductById: async (product_id) => {
 		try {
 			const result = await axios.get(`${PATH_PRODUCTS}/${product_id}`);
-			return result.data;
+			return result.data.data;
 		} catch (error) {
-			return error;
+			return error.response;
 		}
 	},
 	createProduct: async (product_details) => {
