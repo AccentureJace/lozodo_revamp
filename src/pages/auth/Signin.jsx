@@ -4,6 +4,13 @@ import { RiLock2Line } from 'react-icons/ri';
 import { Link, useNavigate } from 'react-router-dom';
 import { authService } from '../../services';
 import { PRODUCT_DASHBOARD, PATH_REGISTER } from '../../constants/routes';
+import {
+    INVALID_PASSWORD_MESSAGE,
+    INVALID_USERNAME_MESSAGE,
+    PASSWORD_MESSAGE,
+    SUCCESSFUL_SIGNIN_MESSAGE,
+    USERNAME_MESSAGE,
+} from '../../constants/auth';
 import { toast } from 'react-toastify';
 
 const Signin = () => {
@@ -20,14 +27,15 @@ const Signin = () => {
                 password: values.password,
             };
             const response = await authService.login(loginData);
-            if (response.message === 'Successfully logged in') {
+            if (response.message === SUCCESSFUL_SIGNIN_MESSAGE) {
                 form.resetFields();
                 setTimeout(() => {
                     navigate(PRODUCT_DASHBOARD);
                 }, 1500);
                 toast.success(response.message);
             } else if (
-                response.response.data.error.message === 'Invalid Username'
+                response.response.data.error.message ===
+                INVALID_USERNAME_MESSAGE
             ) {
                 form.setFields([
                     {
@@ -36,7 +44,8 @@ const Signin = () => {
                     },
                 ]);
             } else if (
-                response.response.data.error.message === 'Invalid password'
+                response.response.data.error.message ===
+                INVALID_PASSWORD_MESSAGE
             ) {
                 form.setFields([
                     {
@@ -47,9 +56,8 @@ const Signin = () => {
             } else {
                 toast.error(response.response.data.error.message);
             }
-            console.log(response);
         } catch (error) {
-            toast.error(`Login failed: ${error.message}`);
+            toast.error(error.message);
         } finally {
             setIsSubmitting(false);
         }
@@ -74,7 +82,7 @@ const Signin = () => {
                         rules={[
                             {
                                 required: true,
-                                message: 'Please enter valid username',
+                                message: USERNAME_MESSAGE,
                             },
                         ]}
                         className='tw-mt-3'
@@ -91,7 +99,7 @@ const Signin = () => {
                         rules={[
                             {
                                 required: true,
-                                message: 'Please enter valid password',
+                                message: PASSWORD_MESSAGE,
                             },
                         ]}
                         className='tw-mt-8'

@@ -18,7 +18,6 @@ const authService = {
 			});
 			const { data } = result.data;
 			JWTStorage.setToken(data.token);
-			console.log('result.data:', data)
 			return data;
 		} catch (error) {
 			return error;

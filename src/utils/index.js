@@ -1,4 +1,6 @@
+import { CONFIRM_PASSOWRD_ERROR } from '../constants/auth';
 import { EMPTY_FIELD_ERROR, INVALID_PASSWORD_ERROR, INVALID_PHONE_NUMBER_ERROR, SESSION_TOKEN } from '../constants/common';
+
 export const JWTStorage = {
 	getToken: () => {
 		return localStorage.getItem(SESSION_TOKEN);
@@ -57,4 +59,14 @@ export const handleFormatAmountToPHP = (amount) => {
 		minimumFractionDigits: 2,
 		maximumFractionDigits: 2,
 	}).format(amount);
+};
+
+export const handleConfirmPassword = (form, _) => {
+    return (_, value) => {
+        const password = form.getFieldValue('password');
+        if (value && value !== password) {
+            return Promise.reject(new Error(CONFIRM_PASSOWRD_ERROR));
+        }
+        return Promise.resolve();
+    };
 };

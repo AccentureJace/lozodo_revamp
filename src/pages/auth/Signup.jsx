@@ -3,8 +3,17 @@ import { Button, Divider, Flex, Form, Input, Spin } from 'antd';
 import { FaRegEdit } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router-dom';
 import { authService } from '../../services';
-import { validateObject } from '../../utils';
+import { validateObject, handleConfirmPassword } from '../../utils';
 import { PATH_LOGIN } from '../../constants/routes';
+import {
+    ADDRESS_MESSAGE,
+    CONTACT_NUMBER_MESSAGE,
+    FIRST_NAME_MESSAGE,
+    LAST_NAME_MESSAGE,
+    PASSWORD_MESSAGE,
+    SUCCESSFUL_SIGNUP_MESSAGE,
+    USERNAME_MESSAGE,
+} from '../../constants/auth';
 import { toast } from 'react-toastify';
 
 const Signup = () => {
@@ -39,7 +48,7 @@ const Signup = () => {
                 password: values.password,
             };
             const response = await authService.register(registerData);
-            if (response.message === 'User registered successfully') {
+            if (response.message === SUCCESSFUL_SIGNUP_MESSAGE) {
                 form.resetFields();
                 setTimeout(() => {
                     navigate(PATH_LOGIN);
@@ -49,18 +58,10 @@ const Signup = () => {
                 toast.error(response.response.data.error.message);
             }
         } catch (error) {
-            toast.error(`Registration failed: ${error.message}`);
+            toast.error(error.message);
         } finally {
             setIsSubmitting(false);
         }
-    };
-
-    const handleConfirmPassword = (_, value) => {
-        const password = form.getFieldValue('password');
-        if (value && value !== password) {
-            return Promise.reject(new Error('Passwords do not match'));
-        }
-        return Promise.resolve();
     };
 
     return (
@@ -86,7 +87,7 @@ const Signup = () => {
                         rules={[
                             {
                                 required: true,
-                                message: 'Please enter valid first name',
+                                message: FIRST_NAME_MESSAGE,
                             },
                         ]}
                         className='tw-mt-3'
@@ -104,7 +105,7 @@ const Signup = () => {
                         rules={[
                             {
                                 required: true,
-                                message: 'Please enter valid last name',
+                                message: LAST_NAME_MESSAGE,
                             },
                         ]}
                         className='tw-mt-3'
@@ -122,7 +123,7 @@ const Signup = () => {
                         rules={[
                             {
                                 required: true,
-                                message: 'Please enter valid contact number',
+                                message: CONTACT_NUMBER_MESSAGE,
                             },
                         ]}
                         className='tw-mt-3'
@@ -140,7 +141,7 @@ const Signup = () => {
                         rules={[
                             {
                                 required: true,
-                                message: 'Please enter valid address',
+                                message: ADDRESS_MESSAGE,
                             },
                         ]}
                         className='tw-mt-3'
@@ -158,7 +159,7 @@ const Signup = () => {
                         rules={[
                             {
                                 required: true,
-                                message: 'Please enter valid username',
+                                message: USERNAME_MESSAGE,
                             },
                         ]}
                         className='tw-mt-3'
@@ -176,7 +177,7 @@ const Signup = () => {
                         rules={[
                             {
                                 required: true,
-                                message: 'Please enter valid password',
+                                message: PASSWORD_MESSAGE,
                             },
                         ]}
                         className='tw-mt-8'
@@ -194,9 +195,9 @@ const Signup = () => {
                         rules={[
                             {
                                 required: true,
-                                message: 'Please enter valid password',
+                                message: PASSWORD_MESSAGE,
                             },
-                            { validator: handleConfirmPassword },
+                            { validator: handleConfirmPassword(form) },
                         ]}
                         className='tw-mt-8'
                     >
