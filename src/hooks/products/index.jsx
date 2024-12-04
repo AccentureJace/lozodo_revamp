@@ -45,12 +45,34 @@ export default function useProductHooks() {
 			setStatus({ code: status, message: data.error });
 		} else {
 			setSelectedProduct({
-				...response.product,
+				...product,
 				price: handleFormatAmountToPHP(product.price),
 				product_img: `data:image/png;base64,${product.product_img}`,
 			});
-			setIsLoading(false);
 		}
+		setIsLoading(false);
+	};
+
+	const fetchProductDetailsIfLoggedOut = async (product_id) => {
+		const response = await productService.getAllProducts();
+
+		const { products, status, data } = response;
+
+		if (!products) {
+			toast.error(data.error);
+			setStatus({ code: status, message: data.error });
+		} else {
+			const product_data = products.find(
+				(product) => product.product_id === product_id
+			);
+
+			setSelectedProduct({
+				...product_data,
+				price: handleFormatAmountToPHP(product_data.price),
+				product_img: `data:image/png;base64,${product_data.product_img}`,
+			});
+		}
+		setIsLoading(false);
 	};
 
 	return {
@@ -59,5 +81,6 @@ export default function useProductHooks() {
 		status,
 		selectedProduct,
 		fetchProductById,
+		fetchProductDetailsIfLoggedOut,
 	};
 }
