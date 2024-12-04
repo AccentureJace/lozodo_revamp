@@ -3,47 +3,38 @@ import { Button, Divider, Flex, Form, Input, Spin } from 'antd';
 import { RiLock2Line } from 'react-icons/ri';
 import { Link, useNavigate } from 'react-router-dom';
 import { authService } from '../../services';
-import { PRODUCT_DASHBOARD } from '../../constants/routes';
+import { PRODUCT_DASHBOARD, PATH_REGISTER } from '../../constants/routes';
+import { toast } from 'react-toastify';
 
 const Signin = () => {
     const navigate = useNavigate();
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const [error, setError] = useState({ username: '', password: '' });
-    const [formData, setFormData] = useState({
-        username: '',
-        password: '',
-    });
-    const handleChangeInput = (event) => {
-        const { name, value } = event.target;
-        setFormData({ ...formData, [name]: value });
-    };
+    const [form] = Form.useForm();
 
     const handleSubmitForm = async (values) => {
         setIsSubmitting(true);
 
-        const loginData = {
-            username: values.username,
-            password: values.password,
-        };
-
         try {
+            const loginData = {
+                username: values.username,
+                password: values.password,
+            };
             const response = await authService.login(loginData);
             if (response.status === 200) {
                 setTimeout(() => {
                     navigate({ PRODUCT_DASHBOARD });
                 }, 1500);
                 toast.success('Login successful!');
-            }
-            if (response.status === 401) {
-                setError({
-                    username: 'Incorrect username',
-                    password: 'Incorrect password',
-                });
+            } else if (response.status === 401) {
+                form.setFields([
+                    { name: 'username', errors: ['Incorrect username'] },
+                    { name: 'password', errors: ['Incorrect password'] },
+                ]);
             } else {
                 toast.error('An error occurred. Please try again later.');
             }
         } catch (error) {
-            toast.error('Login failed: ', error.message);
+            toast.error(`Login failed: ${error.message}`);
         } finally {
             setIsSubmitting(false);
         }
@@ -61,7 +52,7 @@ const Signin = () => {
                     <RiLock2Line className='tw-text-4xl md:tw-text-5xl' />
                 </Flex>
                 <Divider />
-                <Form layout='vertical' onFinish={handleSubmitForm}>
+                <Form layout='vertical' form={form} onFinish={handleSubmitForm}>
                     <Form.Item
                         label='Username'
                         name='username'
@@ -74,18 +65,11 @@ const Signin = () => {
                         className='tw-mt-3'
                     >
                         <Input
-                            type='text'
-                            onChange={handleChangeInput}
                             variant='filled'
                             placeholder='Enter username...'
                             className='tw-px-5 tw-py-3'
                         />
                     </Form.Item>
-                    {error.username && (
-                        <p className='tw-text-red-500 tw-text-sm'>
-                            {error.username}
-                        </p>
-                    )}
                     <Form.Item
                         label='Password'
                         name='password'
@@ -98,17 +82,11 @@ const Signin = () => {
                         className='tw-mt-8'
                     >
                         <Input.Password
-                            onChange={handleChangeInput}
                             variant='filled'
                             placeholder='Enter password...'
                             className='tw-px-5 tw-py-3'
                         />
                     </Form.Item>
-                    {error.password && (
-                        <p className='tw-text-red-500 tw-text-sm'>
-                            {error.password}
-                        </p>
-                    )}
                     <Form.Item>
                         <Link className='tw-italic tw-float-end tw-text-base'>
                             Forgot Password
@@ -142,7 +120,10 @@ const Signin = () => {
                     <p className='tw-text-sm md:tw-text-base tw-italic'>
                         Don't have an account?
                     </p>
-                    <Link className='tw-text-blue-500 tw-font-semibold tw-cursor-pointer tw-text-sm md:tw-text-base'>
+                    <Link
+                        to={PATH_REGISTER}
+                        className='tw-text-blue-500 tw-font-semibold tw-cursor-pointer tw-text-sm md:tw-text-base'
+                    >
                         Create an account
                     </Link>
                 </Flex>
