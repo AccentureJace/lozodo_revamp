@@ -5,6 +5,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import { authService } from '../../services';
 import { PRODUCT_DASHBOARD, PATH_REGISTER } from '../../constants/routes';
 import {
+    ERROR_400_MESSAGE,
+    ERROR_400_TOAST,
+    ERROR_401_MESSAGE,
     INVALID_PASSWORD_MESSAGE,
     INVALID_USERNAME_MESSAGE,
     PASSWORD_MESSAGE,
@@ -26,38 +29,33 @@ const Signin = () => {
                 username: values.username,
                 password: values.password,
             };
-            const response = await authService.login(loginData);
-            if (response.message === SUCCESSFUL_SIGNIN_MESSAGE) {
+            const signin_response = await authService.login(loginData);
+            if (signin_response.message === SUCCESSFUL_SIGNIN_MESSAGE) {
                 form.resetFields();
                 setTimeout(() => {
                     navigate(PRODUCT_DASHBOARD);
                 }, 1500);
-                toast.success(response.message);
-            } else if (
-                response.response.data.error.message ===
-                INVALID_USERNAME_MESSAGE
-            ) {
-                form.setFields([
-                    {
-                        name: 'username',
-                        errors: [response.response.data.error.message],
-                    },
-                ]);
-            } else if (
-                response.response.data.error.message ===
-                INVALID_PASSWORD_MESSAGE
-            ) {
-                form.setFields([
-                    {
-                        name: 'password',
-                        errors: [response.response.data.error.message],
-                    },
-                ]);
+                toast.success(SUCCESSFUL_SIGNIN_MESSAGE);
+            } else if (signin_response.message === ERROR_401_MESSAGE) {
+                {
+                    form.setFields([
+                        {
+                            name: 'username',
+                            errors: [INVALID_USERNAME_MESSAGE],
+                        },
+                        {
+                            name: 'password',
+                            errors: [INVALID_PASSWORD_MESSAGE],
+                        },
+                    ]);
+                }
+            } else if (signin_response.message === ERROR_400_MESSAGE) {
+                toast.error(ERROR_400_TOAST);
             } else {
-                toast.error(response.response.data.error.message);
+                toast.error(signin_response.message);
             }
         } catch (error) {
-            toast.error(error.message);
+            toast.error(error);
         } finally {
             setIsSubmitting(false);
         }
