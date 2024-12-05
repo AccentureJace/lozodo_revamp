@@ -11,6 +11,11 @@ import {
     SUCCESS_SIGNIN,
     VALIDATION_USERNAME,
 } from '../../constants/auth';
+import {
+    RESPONSE_STATUS_200,
+    RESPONSE_STATUS_400,
+    RESPONSE_STATUS_401,
+} from '../../constants/common';
 import { toast } from 'react-toastify';
 
 const Signin = () => {
@@ -27,35 +32,23 @@ const Signin = () => {
                 password: values.password,
             };
             const response = await authService.login(loginData);
-            if (response.message === SUCCESS_SIGNIN) {
-                form.resetFields();
+            if (response.status === RESPONSE_STATUS_200) {
                 setTimeout(() => {
-                    navigate(PRODUCT_DASHBOARD);
+                    navigate({ PRODUCT_DASHBOARD });
                 }, 1500);
-                toast.success(response.message);
-            } else if (
-                response.response.data.error.message === INVALID_USERNAME
-            ) {
+                toast.success('Login successful!');
+            } else if (response.status === RESPONSE_STATUS_401) {
                 form.setFields([
-                    {
-                        name: 'username',
-                        errors: [response.response.data.error.message],
-                    },
+                    { name: 'username', errors: ['Incorrect username'] },
+                    { name: 'password', errors: ['Incorrect password'] },
                 ]);
-            } else if (
-                response.response.data.error.message === INVALID_PASSWORD
-            ) {
-                form.setFields([
-                    {
-                        name: 'password',
-                        errors: [response.response.data.error.message],
-                    },
-                ]);
+            } else if (response.status === RESPONSE_STATUS_400) {
+                toast.error('User already logged in!');
             } else {
-                toast.error(response.response.data.error.message);
+                toast.error('An error occurred. Please try again later.');
             }
         } catch (error) {
-            toast.error(error.message);
+            toast.error(`Login failed: ${error.message}`);
         } finally {
             setIsSubmitting(false);
         }
