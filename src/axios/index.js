@@ -16,6 +16,6 @@ export const setCommonToken = (token) => {
 	axios.defaults.headers.common[HEADER_AUTHORIZATION] = `Bearer ${token}`;
 };
 
-const XAuthToken = JWTStorage.getToken(SESSION_TOKEN);
+const XAuthToken = JWTStorage.getToken(HEADER_AUTHORIZATION);
 axios.defaults.headers.common[HEADER_AUTHORIZATION] = `Bearer ${XAuthToken}`;
 axios.defaults.headers.common[HEADER_GROUP_ID] = GROUP_ID;
