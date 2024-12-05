@@ -8,13 +8,14 @@ import {
     INVALID_PASSWORD,
     INVALID_USERNAME,
     VALIDATION_PASSWORD,
-    SUCCESS_SIGNIN,
+    ERROR_400,
     VALIDATION_USERNAME,
 } from '../../constants/auth';
 import {
     RESPONSE_STATUS_200,
     RESPONSE_STATUS_400,
     RESPONSE_STATUS_401,
+    SERVER_ERROR,
 } from '../../constants/common';
 import { toast } from 'react-toastify';
 
@@ -39,13 +40,13 @@ const Signin = () => {
                 toast.success('Login successful!');
             } else if (response.status === RESPONSE_STATUS_401) {
                 form.setFields([
-                    { name: 'username', errors: ['Incorrect username'] },
-                    { name: 'password', errors: ['Incorrect password'] },
+                    { name: 'username', errors: [INVALID_USERNAME] },
+                    { name: 'password', errors: [INVALID_PASSWORD] },
                 ]);
             } else if (response.status === RESPONSE_STATUS_400) {
-                toast.error('User already logged in!');
+                toast.error(ERROR_400);
             } else {
-                toast.error('An error occurred. Please try again later.');
+                toast.error(SERVER_ERROR);
             }
         } catch (error) {
             toast.error(`Login failed: ${error.message}`);
