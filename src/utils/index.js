@@ -1,4 +1,4 @@
-import { CONFIRM_PASSOWRD_ERROR } from '../constants/auth';
+import { VALIDATION_CONFIRM_PASSWORD } from '../constants/auth';
 import { EMPTY_FIELD_ERROR, INVALID_PASSWORD_ERROR, INVALID_PHONE_NUMBER_ERROR, SESSION_TOKEN } from '../constants/common';
 
 export const JWTStorage = {
@@ -62,11 +62,10 @@ export const handleFormatAmountToPHP = (amount) => {
 };
 
 export const handleConfirmPassword = (form, _) => {
-    return (_, value) => {
+    return async (_, value) => {
         const password = form.getFieldValue('password');
         if (value && value !== password) {
-            return Promise.reject(new Error(CONFIRM_PASSOWRD_ERROR));
+			throw new Error(VALIDATION_CONFIRM_PASSWORD)
         }
-        return Promise.resolve();
     };
 };

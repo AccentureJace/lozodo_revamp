@@ -5,11 +5,11 @@ import { Link, useNavigate } from 'react-router-dom';
 import { authService } from '../../services';
 import { PRODUCT_DASHBOARD, PATH_REGISTER } from '../../constants/routes';
 import {
-    INVALID_PASSWORD_MESSAGE,
-    INVALID_USERNAME_MESSAGE,
-    PASSWORD_MESSAGE,
-    SUCCESSFUL_SIGNIN_MESSAGE,
-    USERNAME_MESSAGE,
+    INVALID_PASSWORD,
+    INVALID_USERNAME,
+    VALIDATION_PASSWORD,
+    SUCCESS_SIGNIN,
+    VALIDATION_USERNAME,
 } from '../../constants/auth';
 import { toast } from 'react-toastify';
 
@@ -27,15 +27,14 @@ const Signin = () => {
                 password: values.password,
             };
             const response = await authService.login(loginData);
-            if (response.message === SUCCESSFUL_SIGNIN_MESSAGE) {
+            if (response.message === SUCCESS_SIGNIN) {
                 form.resetFields();
                 setTimeout(() => {
                     navigate(PRODUCT_DASHBOARD);
                 }, 1500);
                 toast.success(response.message);
             } else if (
-                response.response.data.error.message ===
-                INVALID_USERNAME_MESSAGE
+                response.response.data.error.message === INVALID_USERNAME
             ) {
                 form.setFields([
                     {
@@ -44,8 +43,7 @@ const Signin = () => {
                     },
                 ]);
             } else if (
-                response.response.data.error.message ===
-                INVALID_PASSWORD_MESSAGE
+                response.response.data.error.message === INVALID_PASSWORD
             ) {
                 form.setFields([
                     {
@@ -82,7 +80,7 @@ const Signin = () => {
                         rules={[
                             {
                                 required: true,
-                                message: USERNAME_MESSAGE,
+                                message: VALIDATION_USERNAME,
                             },
                         ]}
                         className='tw-mt-3'
@@ -99,7 +97,7 @@ const Signin = () => {
                         rules={[
                             {
                                 required: true,
-                                message: PASSWORD_MESSAGE,
+                                message: VALIDATION_PASSWORD,
                             },
                         ]}
                         className='tw-mt-8'

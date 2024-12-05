@@ -6,13 +6,13 @@ import { authService } from '../../services';
 import { validateObject, handleConfirmPassword } from '../../utils';
 import { PATH_LOGIN } from '../../constants/routes';
 import {
-    ADDRESS_MESSAGE,
-    CONTACT_NUMBER_MESSAGE,
-    FIRST_NAME_MESSAGE,
-    LAST_NAME_MESSAGE,
-    PASSWORD_MESSAGE,
-    SUCCESSFUL_SIGNUP_MESSAGE,
-    USERNAME_MESSAGE,
+    VALIDATION_ADDRESS,
+    VALIDATION_CONTACT_NUMBER,
+    VALIDATION_FIRST_NAME,
+    VALIDATION_LAST_NAME,
+    VALIDATION_PASSWORD,
+    SUCCESS_SIGNUP,
+    VALIDATION_USERNAME,
 } from '../../constants/auth';
 import { toast } from 'react-toastify';
 
@@ -48,7 +48,7 @@ const Signup = () => {
                 password: values.password,
             };
             const response = await authService.register(registerData);
-            if (response.message === SUCCESSFUL_SIGNUP_MESSAGE) {
+            if (response.message === SUCCESS_SIGNUP) {
                 form.resetFields();
                 setTimeout(() => {
                     navigate(PATH_LOGIN);
@@ -87,7 +87,7 @@ const Signup = () => {
                         rules={[
                             {
                                 required: true,
-                                message: FIRST_NAME_MESSAGE,
+                                message: VALIDATION_FIRST_NAME,
                             },
                         ]}
                         className='tw-mt-3'
@@ -105,7 +105,7 @@ const Signup = () => {
                         rules={[
                             {
                                 required: true,
-                                message: LAST_NAME_MESSAGE,
+                                message: VALIDATION_LAST_NAME,
                             },
                         ]}
                         className='tw-mt-3'
@@ -123,7 +123,7 @@ const Signup = () => {
                         rules={[
                             {
                                 required: true,
-                                message: CONTACT_NUMBER_MESSAGE,
+                                message: VALIDATION_CONTACT_NUMBER,
                             },
                         ]}
                         className='tw-mt-3'
@@ -141,7 +141,7 @@ const Signup = () => {
                         rules={[
                             {
                                 required: true,
-                                message: ADDRESS_MESSAGE,
+                                message: VALIDATION_ADDRESS,
                             },
                         ]}
                         className='tw-mt-3'
@@ -159,7 +159,7 @@ const Signup = () => {
                         rules={[
                             {
                                 required: true,
-                                message: USERNAME_MESSAGE,
+                                message: VALIDATION_USERNAME,
                             },
                         ]}
                         className='tw-mt-3'
@@ -177,7 +177,7 @@ const Signup = () => {
                         rules={[
                             {
                                 required: true,
-                                message: PASSWORD_MESSAGE,
+                                message: VALIDATION_PASSWORD,
                             },
                         ]}
                         className='tw-mt-8'
@@ -195,7 +195,7 @@ const Signup = () => {
                         rules={[
                             {
                                 required: true,
-                                message: PASSWORD_MESSAGE,
+                                message: VALIDATION_PASSWORD,
                             },
                             { validator: handleConfirmPassword(form) },
                         ]}
