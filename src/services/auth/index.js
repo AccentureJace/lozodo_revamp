@@ -54,7 +54,6 @@ const authService = {
 				user_img,
 				access_level: 'user',
 			});
-
 			return result.data;
 		} catch (error) {
 			return error;
