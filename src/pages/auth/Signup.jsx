@@ -6,12 +6,12 @@ import { authService } from '../../services';
 import { validateObject, handleConfirmPassword } from '../../utils';
 import { PATH_LOGIN } from '../../constants/routes';
 import {
+    SUCCESS_SIGNUP,
     VALIDATION_ADDRESS,
     VALIDATION_CONTACT_NUMBER,
     VALIDATION_FIRST_NAME,
     VALIDATION_LAST_NAME,
     VALIDATION_PASSWORD,
-    SUCCESS_SIGNUP,
     VALIDATION_USERNAME,
 } from '../../constants/auth';
 import { toast } from 'react-toastify';
@@ -49,6 +49,7 @@ const Signup = () => {
             };
             const result = await authService.register(registerData);
             const { message } = result;
+
             if (message === SUCCESS_SIGNUP) {
                 form.resetFields();
                 setTimeout(() => {
@@ -56,7 +57,8 @@ const Signup = () => {
                 }, 1500);
                 toast.success(message);
             } else {
-                toast.error(response.response.data.error.message);
+                const { message: error_message } = result.response.data.error;
+                toast.error(error_message);
             }
         } catch (error) {
             toast.error(error.message);

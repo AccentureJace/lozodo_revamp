@@ -13,4 +13,3 @@ export const INVALID_USERNAME = 'Invalid Username';
 export const INVALID_PASSWORD = 'Invalid password';
 export const ERROR_400 = 'User already logged in!';
 export const ERROR_401 = 'Invalid Username or Password';
-
