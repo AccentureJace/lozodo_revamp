@@ -21,34 +21,35 @@ const Categories = () => {
     }, []);
 
     return (
-        <Flex
-            vertical
-            className='tw-bg-white tw-h-[289px] tw-rounded-md  tw-mb-5 tw-p-8'
-        >
-            <h1 className='tw-font-bold'>Categories</h1>
-            <Divider className='tw-border-1 tw-bg-black' />
-            <Flex justify='space-between' align='center'>
-                <BiLeftArrow />
-                {/* <Row className='tw-bg-green-700'>
-                    {categories?.map((category) => (
-                        <Col className='tw-bg-blue' key={category.category_id}>
-                            {category.category_name}
-                        </Col>
-                    ))}
+        // <Flex
+        //     vertical
+        //     className='tw-bg-white tw-h-[289px] tw-rounded-md  tw-mb-5 tw-p-8'
+        // >
+        //     <h1 className='tw-font-bold'>Categories</h1>
+        //     <Divider className='tw-border-1 tw-bg-black' />
+        //     <Flex justify='space-between' align='center'>
+        //         <BiLeftArrow />
+        //         {/* <Row className='tw-bg-green-700'>
+        //             {categories?.map((category) => (
+        //                 <Col className='tw-bg-blue' key={category.category_id}>
+        //                     {category.category_name}
+        //                 </Col>
+        //             ))}
 
-                    <Col>kjdhjs</Col>
-                    <Col>kjfjke</Col>
-                </Row> */}
+        //             <Col>kjdhjs</Col>
+        //             <Col>kjfjke</Col>
+        //         </Row> */}
 
-                <Row className='tw-gap-5'>
-                    <Col>rcol1</Col>
-                    <Col>rcol2</Col>
-                    <Col>rcol3</Col>
-                </Row>
+        //         <Row className='tw-gap-5'>
+        //             <Col>rcol1</Col>
+        //             <Col>rcol2</Col>
+        //             <Col>rcol3</Col>
+        //         </Row>
 
-                <BiRightArrow />
-            </Flex>
-        </Flex>
+        //         <BiRightArrow />
+        //     </Flex>
+        // </Flex>
+        <></>
     );
 };
 
