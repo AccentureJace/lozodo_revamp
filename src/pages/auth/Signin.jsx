@@ -8,15 +8,10 @@ import {
     INVALID_PASSWORD,
     INVALID_USERNAME,
     VALIDATION_PASSWORD,
-    ERROR_400,
     VALIDATION_USERNAME,
+    SUCCESS_SIGNIN,
+    ERROR_401,
 } from '../../constants/auth';
-import {
-    RESPONSE_STATUS_200,
-    RESPONSE_STATUS_400,
-    RESPONSE_STATUS_401,
-    SERVER_ERROR,
-} from '../../constants/common';
 import { toast } from 'react-toastify';
 
 const Signin = () => {
@@ -32,24 +27,28 @@ const Signin = () => {
                 username: values.username,
                 password: values.password,
             };
-            const response = await authService.login(loginData);
-            if (response.status === RESPONSE_STATUS_200) {
+            const result = await authService.login(loginData);
+            const { message } = result;
+
+            if (message === SUCCESS_SIGNIN) {
+                form.resetFields();
                 setTimeout(() => {
-                    navigate({ PRODUCT_DASHBOARD });
+                    navigate(PRODUCT_DASHBOARD);
                 }, 1500);
-                toast.success('Login successful!');
-            } else if (response.status === RESPONSE_STATUS_401) {
-                form.setFields([
-                    { name: 'username', errors: [INVALID_USERNAME] },
-                    { name: 'password', errors: [INVALID_PASSWORD] },
-                ]);
-            } else if (response.status === RESPONSE_STATUS_400) {
-                toast.error(ERROR_400);
+                toast.success(message);
             } else {
-                toast.error(SERVER_ERROR);
+                const { message: error_message } = result.response?.data.error;
+                if (error_message === ERROR_401) {
+                    form.setFields([
+                        { name: 'username', errors: [INVALID_USERNAME] },
+                        { name: 'password', errors: [INVALID_PASSWORD] },
+                    ]);
+                } else {
+                    toast.error(error_message);
+                }
             }
         } catch (error) {
-            toast.error(`Login failed: ${error.message}`);
+            toast.error(error.message);
         } finally {
             setIsSubmitting(false);
         }
