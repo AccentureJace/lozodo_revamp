@@ -5,20 +5,13 @@ import { Link, useNavigate } from 'react-router-dom';
 import { authService } from '../../services';
 import { PRODUCT_DASHBOARD, PATH_REGISTER } from '../../constants/routes';
 import {
-    ERROR_400_MESSAGE,
-    ERROR_400_TOAST,
-    ERROR_401_MESSAGE,
-    INVALID_PASSWORD_MESSAGE,
-    INVALID_USERNAME_MESSAGE,
-    PASSWORD_MESSAGE,
-    SUCCESSFUL_SIGNIN_MESSAGE,
-    USERNAME_MESSAGE,
+    INVALID_PASSWORD,
+    INVALID_USERNAME,
+    VALIDATION_PASSWORD,
+    VALIDATION_USERNAME,
+    SUCCESS_SIGNIN,
+    ERROR_401,
 } from '../../constants/auth';
-import {
-    RESPONSE_STATUS_200,
-    RESPONSE_STATUS_400,
-    RESPONSE_STATUS_401,
-} from '../../constants/common';
 import { toast } from 'react-toastify';
 
 const Signin = () => {
@@ -34,24 +27,28 @@ const Signin = () => {
                 username: values.username,
                 password: values.password,
             };
-            const response = await authService.login(loginData);
-            if (response.status === RESPONSE_STATUS_200) {
+            const result = await authService.login(loginData);
+            const { message } = result;
+
+            if (message === SUCCESS_SIGNIN) {
+                form.resetFields();
                 setTimeout(() => {
-                    navigate({ PRODUCT_DASHBOARD });
+                    navigate(PRODUCT_DASHBOARD);
                 }, 1500);
-                toast.success('Login successful!');
-            } else if (response.status === RESPONSE_STATUS_401) {
-                form.setFields([
-                    { name: 'username', errors: ['Incorrect username'] },
-                    { name: 'password', errors: ['Incorrect password'] },
-                ]);
-            } else if (response.status === RESPONSE_STATUS_400) {
-                toast.error('User already logged in!');
+                toast.success(message);
             } else {
-                toast.error('An error occurred. Please try again later.');
+                const { message: error_message } = result.response?.data.error;
+                if (error_message === ERROR_401) {
+                    form.setFields([
+                        { name: 'username', errors: [INVALID_USERNAME] },
+                        { name: 'password', errors: [INVALID_PASSWORD] },
+                    ]);
+                } else {
+                    toast.error(error_message);
+                }
             }
         } catch (error) {
-            toast.error(`Login failed: ${error.message}`);
+            toast.error(error.message);
         } finally {
             setIsSubmitting(false);
         }
@@ -76,7 +73,7 @@ const Signin = () => {
                         rules={[
                             {
                                 required: true,
-                                message: USERNAME_MESSAGE,
+                                message: VALIDATION_USERNAME,
                             },
                         ]}
                         className='tw-mt-3'
@@ -93,7 +90,7 @@ const Signin = () => {
                         rules={[
                             {
                                 required: true,
-                                message: PASSWORD_MESSAGE,
+                                message: VALIDATION_PASSWORD,
                             },
                         ]}
                         className='tw-mt-8'

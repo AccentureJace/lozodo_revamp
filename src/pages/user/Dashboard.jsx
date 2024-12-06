@@ -1,12 +1,16 @@
 import { Col, Row, Spin } from 'antd';
 import { useNavigate } from 'react-router';
-import { ProductCard, ProductBanner } from '../../components';
-import { useProductHooks } from '../../hooks';
-import Categories from '../../components/categories/Categories';
+import { ProductCard, ProductBanner, Categories } from '../../components';
+import { useProductHooks, useCategoryHooks } from '../../hooks';
 
 const Dashboard = () => {
     const { products, isLoading } = useProductHooks();
+    const { selectedCategory } = useCategoryHooks();
     let navigate = useNavigate();
+
+    const filtered_products = selectedCategory
+        ? products.filter((product) => product.category_id === selectedCategory)
+        : products;
 
     return (
         <div>
@@ -19,7 +23,7 @@ const Dashboard = () => {
                     <ProductBanner />
                     <Categories />
                     <Row gutter={16}>
-                        {products.map((product) => (
+                        {filtered_products.map((product) => (
                             <Col
                                 key={product.product_id}
                                 className='gutter-row'

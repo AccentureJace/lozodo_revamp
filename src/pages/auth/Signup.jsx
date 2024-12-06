@@ -47,13 +47,14 @@ const Signup = () => {
                 username: values.username,
                 password: values.password,
             };
-            const response = await authService.register(registerData);
-            if (response.message === SUCCESS_SIGNUP) {
+            const result = await authService.register(registerData);
+            const { message } = result;
+            if (message === SUCCESS_SIGNUP) {
                 form.resetFields();
                 setTimeout(() => {
                     navigate(PATH_LOGIN);
                 }, 1500);
-                toast.success(response.message);
+                toast.success(message);
             } else {
                 toast.error(response.response.data.error.message);
             }

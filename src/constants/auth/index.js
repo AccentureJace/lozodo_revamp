@@ -11,7 +11,6 @@ export const SUCCESS_SIGNIN = 'Successfully logged in!';
 
 export const INVALID_USERNAME = 'Invalid Username';
 export const INVALID_PASSWORD = 'Invalid password';
-export const ERROR_400_MESSAGE = 'Request failed with status code 400'
-export const ERROR_401_MESSAGE = 'Request failed with status code 401'
-export const ERROR_400 = 'User already logged in!'
+export const ERROR_400 = 'User already logged in!';
+export const ERROR_401 = 'Invalid Username or Password';
 
