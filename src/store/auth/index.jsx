@@ -9,3 +9,5 @@ export const useAuthenticationStore = create((set) => ({
 		set({ authenticatedUser: null });
 	},
 }));
+
+export default useAuthenticationStore;

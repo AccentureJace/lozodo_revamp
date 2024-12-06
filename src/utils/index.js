@@ -62,11 +62,10 @@ export const handleFormatAmountToPHP = (amount) => {
 };
 
 export const handleConfirmPassword = (form, _) => {
-    return (_, value) => {
+    return async (_, value) => {
         const password = form.getFieldValue('password');
         if (value && value !== password) {
-            return Promise.reject(new Error(VALIDATION_CONFIRM_PASSWORD));
+			throw new Error(VALIDATION_CONFIRM_PASSWORD)
         }
-        return Promise.resolve();
     };
 };
