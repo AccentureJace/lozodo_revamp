@@ -17,4 +17,5 @@ export const INVALID_PASSWORD_ERROR =
 export const EMPTY_FIELD_ERROR = 'This field is required.';
 
 export const RESPONSE_STATUS_200 = 200;
+export const RESPONSE_STATUS_400 = 400;
 export const RESPONSE_STATUS_401 = 401;

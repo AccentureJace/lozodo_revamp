@@ -3,8 +3,17 @@ import { Button, Divider, Flex, Form, Input, Spin } from 'antd';
 import { FaRegEdit } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router-dom';
 import { authService } from '../../services';
-import { validateObject } from '../../utils';
+import { validateObject, handleConfirmPassword } from '../../utils';
 import { PATH_LOGIN } from '../../constants/routes';
+import {
+    SUCCESS_SIGNUP,
+    VALIDATION_ADDRESS,
+    VALIDATION_CONTACT_NUMBER,
+    VALIDATION_FIRST_NAME,
+    VALIDATION_LAST_NAME,
+    VALIDATION_PASSWORD,
+    VALIDATION_USERNAME,
+} from '../../constants/auth';
 import { toast } from 'react-toastify';
 
 const Signup = () => {
@@ -33,34 +42,29 @@ const Signup = () => {
             const registerData = {
                 first_name: values.first_name,
                 last_name: values.last_name,
-                contact_number: values.contact_number,
                 address: values.address,
+                contact_number: values.contact_number,
                 username: values.username,
                 password: values.password,
             };
-            const response = await authService.register(registerData);
-            if (response.status === 200) {
+            const result = await authService.register(registerData);
+            const { message } = result;
+
+            if (message === SUCCESS_SIGNUP) {
                 form.resetFields();
                 setTimeout(() => {
-                    navigate({ PATH_LOGIN });
+                    navigate(PATH_LOGIN);
                 }, 1500);
-                toast.success('Register successful!');
+                toast.success(message);
             } else {
-                toast.error('An error occurred. Please try again later.');
+                const { message: error_message } = result.response.data.error;
+                toast.error(error_message);
             }
         } catch (error) {
-            toast.error(`Registration failed: ${error.message}`);
+            toast.error(error.message);
         } finally {
             setIsSubmitting(false);
         }
-    };
-
-    const handleConfirmPassword = (_, value) => {
-        const password = form.getFieldValue('password');
-        if (value && value !== password) {
-            return Promise.reject(new Error('Passwords do not match'));
-        }
-        return Promise.resolve();
     };
 
     return (
@@ -86,7 +90,7 @@ const Signup = () => {
                         rules={[
                             {
                                 required: true,
-                                message: 'Please enter valid first name',
+                                message: VALIDATION_FIRST_NAME,
                             },
                         ]}
                         className='tw-mt-3'
@@ -104,7 +108,7 @@ const Signup = () => {
                         rules={[
                             {
                                 required: true,
-                                message: 'Please enter valid last name',
+                                message: VALIDATION_LAST_NAME,
                             },
                         ]}
                         className='tw-mt-3'
@@ -122,7 +126,7 @@ const Signup = () => {
                         rules={[
                             {
                                 required: true,
-                                message: 'Please enter valid contact number',
+                                message: VALIDATION_CONTACT_NUMBER,
                             },
                         ]}
                         className='tw-mt-3'
@@ -140,7 +144,7 @@ const Signup = () => {
                         rules={[
                             {
                                 required: true,
-                                message: 'Please enter valid address',
+                                message: VALIDATION_ADDRESS,
                             },
                         ]}
                         className='tw-mt-3'
@@ -158,7 +162,7 @@ const Signup = () => {
                         rules={[
                             {
                                 required: true,
-                                message: 'Please enter valid username',
+                                message: VALIDATION_USERNAME,
                             },
                         ]}
                         className='tw-mt-3'
@@ -176,7 +180,7 @@ const Signup = () => {
                         rules={[
                             {
                                 required: true,
-                                message: 'Please enter valid password',
+                                message: VALIDATION_PASSWORD,
                             },
                         ]}
                         className='tw-mt-8'
@@ -194,9 +198,9 @@ const Signup = () => {
                         rules={[
                             {
                                 required: true,
-                                message: 'Please enter valid password',
+                                message: VALIDATION_PASSWORD,
                             },
-                            { validator: handleConfirmPassword },
+                            { validator: handleConfirmPassword(form) },
                         ]}
                         className='tw-mt-8'
                     >
