@@ -1,4 +1,4 @@
-import Signin from "./auth/Signin";
-import Signup from "./auth/Signup";
+import { Signin, Signup } from './auth';
+import { Dashboard, ProductDetails } from './user';
 
-export {Signin, Signup};
+export { Signin, Signup, Dashboard, ProductDetails };
