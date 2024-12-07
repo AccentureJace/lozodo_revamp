@@ -2,7 +2,9 @@ import { Col, Row, Input, Badge, Dropdown, Space, Button } from 'antd';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
 import { FaEdit } from 'react-icons/fa';
 import { FiUser } from 'react-icons/fi';
+import { Link } from 'react-router-dom';
 import { lozodo_logo } from '../../assets/images';
+import { PRODUCT_DASHBOARD } from '../../constants/routes';
 
 const StoreHeader = () => {
 	const items = [
@@ -31,13 +33,13 @@ const StoreHeader = () => {
 		<div className='flex'>
 			<Row className='tw-bg-blue-600 tw-py-3'>
 				<Col className='gutter-row' span={4}>
-					<div>
+					<Link to={PRODUCT_DASHBOARD}>
 						<img
 							src={lozodo_logo}
 							className='tw-h-10 tw-px-4'
 							alt='Logo'
 						/>
-					</div>
+					</Link>
 				</Col>
 
 				<Col className='gutter-row' span={17}>
