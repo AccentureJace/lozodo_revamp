@@ -5,8 +5,12 @@ import { FiUser } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 import { lozodo_logo } from '../../assets/images';
 import { PRODUCT_DASHBOARD } from '../../constants/routes';
+import { useCartStore } from '../../store';
+import { useCartHooks } from '../../hooks';
 
 const StoreHeader = () => {
+	const { itemsInCart } = useCartStore((state) => state);
+	useCartHooks();
 	const items = [
 		{
 			label: (
@@ -34,21 +38,13 @@ const StoreHeader = () => {
 			<Row className='tw-bg-blue-600 tw-py-3'>
 				<Col className='gutter-row' span={4}>
 					<Link to={PRODUCT_DASHBOARD}>
-						<img
-							src={lozodo_logo}
-							className='tw-h-10 tw-px-4'
-							alt='Logo'
-						/>
+						<img src={lozodo_logo} className='tw-h-10 tw-px-4' alt='Logo' />
 					</Link>
 				</Col>
 
 				<Col className='gutter-row' span={17}>
 					<div className='tw-flex tw-justify-center tw-items-center h-full'>
-						<Input
-							size='large'
-							className='tw-w-full'
-							placeholder='Search products'
-						/>
+						<Input size='large' className='tw-w-full' placeholder='Search products' />
 					</div>
 				</Col>
 
@@ -66,7 +62,7 @@ const StoreHeader = () => {
 								</Space>
 							</a>
 						</Dropdown>
-						<Badge count={0} showZero>
+						<Badge count={itemsInCart.length} showZero>
 							<AiOutlineShoppingCart className='tw-text-3xl tw-text-white' />
 						</Badge>
 					</div>

@@ -39,8 +39,7 @@ export default function useCartHooks() {
 
 	const addToCartLoggedIn = async ({ product, quantity }) => {
 		setIsLoading(true);
-		const floatPrice = parseFloat(product.price.substring(1, product.price.length).replace(',', ''));
-		product['total_price'] = floatPrice * quantity;
+		product['total_price'] = product.price * quantity;
 		product['quantity'] = quantity;
 		product['other_details'] = {};
 		const response = await cartService.addItemToCart(product);
@@ -63,14 +62,13 @@ export default function useCartHooks() {
 
 	const addToCartLoggedOut = async ({ product, quantity }) => {
 		setIsLoading(true);
-		const floatPrice = parseFloat(product.price.substring(1, product.price.length).replace(',', ''));
-		product['total_price'] = floatPrice * quantity;
+		product['total_price'] = product.price * quantity;
 		product['quantity'] = quantity;
 		product['other_details'] = {};
 		const cartData = {};
 		var latestCart = [];
 		cartData.cart_id = new Date().getTime();
-		cartData.items = [{ ...product, price: floatPrice }];
+		cartData.items = [{ ...product }];
 		const currCart = cartStorage.getCart() ? JSON.parse(cartStorage.getCart()) : [];
 		const exists =
 			currCart.filter((item) => {

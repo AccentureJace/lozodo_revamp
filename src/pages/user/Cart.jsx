@@ -4,10 +4,13 @@ import { toast } from 'react-toastify';
 import { AiFillDelete } from 'react-icons/ai';
 import { CartCard, CartSummary } from '../../components';
 import { cartService } from '../../services';
-import { useCartStore } from '../../store';
+import { useAuthenticationStore, useCartStore } from '../../store';
+import { cartStorage } from '../../utils';
+import { REMOVE_FROM_CART_NONE_ERROR, REMOVE_FROM_CART_SUCCESS_MESSAGE } from '../../constants/cart';
 
 const Cart = () => {
 	const { itemsInCart, setItemsInCart } = useCartStore((state) => state);
+	const { authenticatedUser } = useAuthenticationStore((state) => state);
 
 	const handleToggleCheckout = (index) => {
 		if (itemsInCart[index].items[0].checked) {
@@ -44,22 +47,31 @@ const Cart = () => {
 			},
 		}).then((result) => {
 			if (result.isConfirmed) {
+				const filteredCart = itemsInCart.filter((cart) => !cart.items[0].checked);
+				if (itemsInCart.filter((cart) => cart.items[0].checked).length == 0) {
+					toast.error(REMOVE_FROM_CART_NONE_ERROR);
+					return;
+				}
 				const deleteItems = async () => {
 					const checked = itemsInCart.filter((item) => {
 						return item.items[0].checked;
 					});
 
-					const promiseArray = [];
+					if (authenticatedUser) {
+						const promiseArray = [];
 
-					checked.map((element) => {
-						promiseArray.push(cartService.deleteCart(element.cart_id));
-					});
+						checked.map((element) => {
+							promiseArray.push(cartService.deleteCart(element.cart_id));
+						});
 
-					const result = await Promise.all(promiseArray);
+						const result = await Promise.all(promiseArray);
+					} else {
+					}
 
-					setItemsInCart(itemsInCart.filter((cart) => cart.items[0].checked == false));
+					setItemsInCart(filteredCart);
+					cartStorage.setCart(JSON.stringify(filteredCart));
 
-					toast.success('Items deleted successfully');
+					toast.success(REMOVE_FROM_CART_SUCCESS_MESSAGE);
 				};
 
 				deleteItems();

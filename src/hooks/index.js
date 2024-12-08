@@ -1,3 +1,3 @@
 import useProductHooks from './products/index.jsx';
-
-export { useProductHooks };
+import useCartHooks from './cart';
+export { useProductHooks, useCartHooks };
