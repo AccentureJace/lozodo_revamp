@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react';
-import { toast } from 'react-toastify';
 import Swal from 'sweetalert2';
+import { toast } from 'react-toastify';
 import { cartService } from '../../services';
-import { useCartStore } from '../../store';
+import { useAuthenticationStore, useCartStore } from '../../store';
 import { cartStorage } from '../../utils';
-import { useAuthenticationStore } from '../../store/useAuthenticationStore';
 
 export default function useCartHooks() {
 	const [isLoading, setIsLoading] = useState(false);
@@ -25,9 +24,9 @@ export default function useCartHooks() {
 			}).then((result) => {
 				if (result.isConfirmed) {
 					transferCart(JSON.parse(cartStorage.getCart()));
-					cartStorage.clearCart();
 				}
 				if (result.isDenied) {
+					console.log('denied');
 					cartStorage.clearCart();
 				}
 			});
