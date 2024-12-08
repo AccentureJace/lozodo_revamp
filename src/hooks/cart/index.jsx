@@ -4,6 +4,7 @@ import { toast } from 'react-toastify';
 import { cartService } from '../../services';
 import { useAuthenticationStore, useCartStore } from '../../store';
 import { cartStorage } from '../../utils';
+import { ADD_TO_CART_ERROR_MESSAGE, ADD_TO_CART_PENDING_MESSAGE, ADD_TO_CART_SUCCESS_MESSAGE } from '../../constants/cart';
 
 export default function useCartHooks() {
 	const [isLoading, setIsLoading] = useState(false);
@@ -23,10 +24,20 @@ export default function useCartHooks() {
 				},
 			}).then((result) => {
 				if (result.isConfirmed) {
-					transferCart(JSON.parse(cartStorage.getCart()));
+					toast.promise(
+						() => {
+							return transferCart(JSON.parse(cartStorage.getCart()));
+						},
+						{
+							pending: ADD_TO_CART_PENDING_MESSAGE,
+							success: ADD_TO_CART_SUCCESS_MESSAGE,
+							error: ADD_TO_CART_ERROR_MESSAGE,
+						}
+					);
+
+					cartStorage.clearCart();
 				}
 				if (result.isDenied) {
-					console.log('denied');
 					cartStorage.clearCart();
 				}
 			});
@@ -55,9 +66,7 @@ export default function useCartHooks() {
 		});
 
 		await Promise.all(promiseArray);
-		getItemsInCart();
-		cartStorage.clearCart();
-		toast.success('Items added to cart.');
+		await getItemsInCart();
 	};
 
 	const addToCartLoggedOut = async ({ product, quantity }) => {
@@ -93,6 +102,7 @@ export default function useCartHooks() {
 	};
 
 	const getItemsInCart = async () => {
+		setIsLoading(true);
 		if (authenticatedUser) {
 			const response = await cartService.getCart();
 			const cartData = response.data.cart;
@@ -103,6 +113,7 @@ export default function useCartHooks() {
 				setItemsInCart(storeCart);
 			}
 		}
+		setIsLoading(false);
 	};
 
 	return {

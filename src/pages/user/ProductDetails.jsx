@@ -9,7 +9,7 @@ import { TbTruckReturn } from 'react-icons/tb';
 import { useParams } from 'react-router-dom';
 import { useProductHooks, useCartHooks } from '../../hooks';
 import { useAuthenticationStore } from '../../store';
-import { ADD_TO_CART_SUCCESS_MESSAGE } from '../../constants/cart';
+import { ADD_TO_CART_SUCCESS_MESSAGE, ADD_TO_CART_PENDING_MESSAGE, ADD_TO_CART_ERROR_MESSAGE } from '../../constants/cart';
 import { handleFormatAmountToPHP } from '../../utils';
 
 const ProductDetails = () => {
@@ -40,13 +40,29 @@ const ProductDetails = () => {
 
 	const handleAddToCart = async () => {
 		if (authenticatedUser) {
-			await addToCartLoggedIn({ product: selectedProduct, quantity });
+			toast.promise(
+				() => {
+					return addToCartLoggedIn({ product: selectedProduct, quantity });
+				},
+				{
+					pending: ADD_TO_CART_PENDING_MESSAGE,
+					success: ADD_TO_CART_SUCCESS_MESSAGE,
+					error: ADD_TO_CART_ERROR_MESSAGE,
+				}
+			);
 		} else {
-			await addToCartLoggedOut({ product: selectedProduct, quantity });
+			toast.promise(
+				() => {
+					return addToCartLoggedOut({ product: selectedProduct, quantity });
+				},
+				{
+					pending: 'Adding to cart...',
+					success: ADD_TO_CART_SUCCESS_MESSAGE,
+					error: 'Something went wrong',
+				}
+			);
 		}
 		setQuantity(1);
-
-		toast.success(ADD_TO_CART_SUCCESS_MESSAGE);
 	};
 
 	return (
@@ -78,9 +94,9 @@ const ProductDetails = () => {
 									<p className='tw-text-4xl tw-text-red-500'>{handleFormatAmountToPHP(price)}</p>
 									<div className='tw-pt-10 tw-flex tw-gap-3'>
 										<p className='tw-text-md tw-pt-1'>Quantity</p>
-										<Button icon={<FaPlus />} />
-										<p className='tw-text-lg'>1</p>
-										<Button icon={<FaMinus />} />
+										<Button icon={<FaPlus />} onClick={handleAddQuantity} />
+										<p className='tw-text-lg'>{quantity}</p>
+										<Button icon={<FaMinus />} onClick={handleSubtractQuantity} />
 									</div>
 									<div className='tw-pt-10 tw-flex tw-gap-3 '>
 										<Button className='tw-bg-red-500 tw-px-5 tw-py-5 tw-flex tw-gap-2'>
@@ -88,17 +104,8 @@ const ProductDetails = () => {
 											<p className='tw-text-white'>Buy Now</p>
 										</Button>
 										<Button className='tw-bg-blue-500 tw-px-5 tw-py-5 tw-flex tw-gap-2 hover:tw-bg-blue-200 tw-items-center' onClick={handleAddToCart} disabled={addToCartLoading}>
-											{addToCartLoading ? (
-												<>
-													<Spin size='small' className='tw-pe-2' />
-													<p>Adding to Cart</p>
-												</>
-											) : (
-												<>
-													<ImCart className='tw-text-white tw-text-xl tw-container tw-pe-2' />
-													<p className='tw-text-white'>Add to Cart</p>
-												</>
-											)}
+											<ImCart className='tw-text-white tw-text-xl tw-container tw-pe-2' />
+											<p className='tw-text-white'>Add to Cart</p>
 										</Button>
 									</div>
 								</Col>

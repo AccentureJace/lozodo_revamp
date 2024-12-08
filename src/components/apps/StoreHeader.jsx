@@ -4,13 +4,25 @@ import { FaEdit } from 'react-icons/fa';
 import { FiUser } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 import { lozodo_logo } from '../../assets/images';
-import { PRODUCT_DASHBOARD } from '../../constants/routes';
-import { useCartStore } from '../../store';
+import { PATH_CART, PRODUCT_DASHBOARD } from '../../constants/routes';
+import { useAuthenticationStore, useCartStore } from '../../store';
 import { useCartHooks } from '../../hooks';
+import { useEffect } from 'react';
+import { JWTStorage } from '../../utils';
+import { authService } from '../../services';
 
 const StoreHeader = () => {
 	const { itemsInCart } = useCartStore((state) => state);
+	const { setAuthenticatedUser } = useAuthenticationStore((state) => state);
 	useCartHooks();
+
+	useEffect(() => {
+		if (JWTStorage.getToken()) {
+			const user = authService.getUserByUUID();
+			setAuthenticatedUser(user);
+		}
+	}, []);
+
 	const items = [
 		{
 			label: (
@@ -62,9 +74,11 @@ const StoreHeader = () => {
 								</Space>
 							</a>
 						</Dropdown>
-						<Badge count={itemsInCart.length} showZero>
-							<AiOutlineShoppingCart className='tw-text-3xl tw-text-white' />
-						</Badge>
+						<Link to={PATH_CART}>
+							<Badge count={itemsInCart.length} showZero>
+								<AiOutlineShoppingCart className='tw-text-3xl tw-text-white' />
+							</Badge>
+						</Link>
 					</div>
 				</Col>
 			</Row>
