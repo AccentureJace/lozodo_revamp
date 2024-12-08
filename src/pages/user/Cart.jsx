@@ -3,7 +3,7 @@ import Swal from 'sweetalert2';
 import { toast } from 'react-toastify';
 import { AiFillDelete } from 'react-icons/ai';
 import { CartCard, CartSummary } from '../../components';
-import { cartService } from '../../services/cart';
+import { cartService } from '../../services';
 import { useCartStore } from '../../store';
 
 const Cart = () => {
