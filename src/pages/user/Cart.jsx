@@ -6,7 +6,7 @@ import { CartCard, CartSummary } from '../../components';
 import { cartService } from '../../services';
 import { useAuthenticationStore, useCartStore } from '../../store';
 import { cartStorage } from '../../utils';
-import { REMOVE_FROM_CART_NONE_ERROR, REMOVE_FROM_CART_SUCCESS_MESSAGE } from '../../constants/cart';
+import { ERROR_REMOVE_FROM_CART_NONE, SUCCESS_REMOVE_FROM_CART } from '../../constants/cart';
 import { useCartHooks } from '../../hooks';
 
 const Cart = () => {
@@ -46,11 +46,11 @@ const Cart = () => {
 				confirmButton: 'tw-bg-blue-500',
 				denyButton: 'tw-bg-red-500',
 			},
-		}).then((result) => {
+		}).then(async (result) => {
 			if (result.isConfirmed) {
 				const filteredCart = itemsInCart.filter((cart) => !cart.items[0].checked);
 				if (itemsInCart.filter((cart) => cart.items[0].checked).length == 0) {
-					toast.error(REMOVE_FROM_CART_NONE_ERROR);
+					toast.error(ERROR_REMOVE_FROM_CART_NONE);
 					return;
 				}
 				const deleteItems = async () => {
@@ -67,17 +67,13 @@ const Cart = () => {
 
 						const result = await Promise.all(promiseArray);
 					} else {
+						cartStorage.setCart(JSON.stringify(filteredCart));
 					}
-
 					setItemsInCart(filteredCart);
-					cartStorage.setCart(JSON.stringify(filteredCart));
 				};
 
-				toast.promise(deleteItems, {
-					pending: 'Deleting items from cart',
-					success: REMOVE_FROM_CART_SUCCESS_MESSAGE,
-					error: 'Something went wrong.',
-				});
+				await deleteItems();
+				toast.success(SUCCESS_REMOVE_FROM_CART);
 			}
 		});
 	};

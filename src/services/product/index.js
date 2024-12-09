@@ -27,7 +27,7 @@ const productService = {
 				product_img,
 				product_description,
 				category: [category],
-				price: price,
+				price,
 				currency: 'peso',
 				created_by,
 				other_details: null,
@@ -45,7 +45,7 @@ const productService = {
 				product_img,
 				product_description,
 				category,
-				price: price,
+				price,
 				currency,
 				created_by,
 			});

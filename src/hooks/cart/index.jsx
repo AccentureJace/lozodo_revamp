@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import { cartService } from '../../services';
 import { useAuthenticationStore, useCartStore } from '../../store';
 import { cartStorage } from '../../utils';
-import { ADD_TO_CART_ERROR_MESSAGE, ADD_TO_CART_PENDING_MESSAGE, ADD_TO_CART_SUCCESS_MESSAGE } from '../../constants/cart';
+import { ERROR_ADD_TO_CART, SUCCESS_ADD_TO_CART, ERROR_FETCH_CART } from '../../constants/cart';
 
 export default function useCartHooks() {
 	const [isLoading, setIsLoading] = useState(false);
@@ -24,17 +24,7 @@ export default function useCartHooks() {
 				},
 			}).then((result) => {
 				if (result.isConfirmed) {
-					toast.promise(
-						() => {
-							return transferCart(JSON.parse(cartStorage.getCart()));
-						},
-						{
-							pending: ADD_TO_CART_PENDING_MESSAGE,
-							success: ADD_TO_CART_SUCCESS_MESSAGE,
-							error: ADD_TO_CART_ERROR_MESSAGE,
-						}
-					);
-
+					transferCart(JSON.parse(cartStorage.getCart()));
 					cartStorage.clearCart();
 				}
 				if (result.isDenied) {
@@ -60,22 +50,21 @@ export default function useCartHooks() {
 	};
 
 	const transferCart = async (storageCart) => {
-		const promiseArray = [];
-		storageCart.map((cart) => {
-			promiseArray.push(cartService.addItemToCart(cart.items[0]));
+		storageCart.map(async (cart) => {
+			await cartService.addItemToCart(cart.items[0]);
 		});
 
-		await Promise.all(promiseArray);
 		await getItemsInCart();
+		toast.success(SUCCESS_ADD_TO_CART);
 	};
 
 	const addToCartLoggedOut = async ({ product, quantity }) => {
+		const cartData = {};
+		var latestCart = [];
 		setIsLoading(true);
 		product['total_price'] = product.price * quantity;
 		product['quantity'] = quantity;
 		product['other_details'] = {};
-		const cartData = {};
-		var latestCart = [];
 		cartData.cart_id = new Date().getTime();
 		cartData.items = [{ ...product }];
 		const currCart = cartStorage.getCart() ? JSON.parse(cartStorage.getCart()) : [];
@@ -104,9 +93,14 @@ export default function useCartHooks() {
 	const getItemsInCart = async () => {
 		setIsLoading(true);
 		if (authenticatedUser) {
-			const response = await cartService.getCart();
-			const cartData = response.data.cart;
-			setItemsInCart(cartData);
+			try {
+				const response = await cartService.getCart();
+
+				const cartData = response.data.cart;
+				setItemsInCart(cartData);
+			} catch (error) {
+				toast.error(ERROR_FETCH_CART);
+			}
 		} else {
 			if (cartStorage.getCart()) {
 				const storeCart = JSON.parse(cartStorage.getCart());

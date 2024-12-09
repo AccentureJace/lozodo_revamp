@@ -8,7 +8,7 @@ import { ImCart } from 'react-icons/im';
 import { TbTruckReturn } from 'react-icons/tb';
 import { useParams } from 'react-router-dom';
 import { useAuthenticationStore } from '../../store';
-import { ADD_TO_CART_SUCCESS_MESSAGE, ADD_TO_CART_PENDING_MESSAGE, ADD_TO_CART_ERROR_MESSAGE } from '../../constants/cart';
+import { SUCCESS_ADD_TO_CART, ERROR_ADD_TO_CART } from '../../constants/cart';
 import { handleFormatAmountToPHP } from '../../utils';
 import { useProductHooks, useCartHooks } from '../../hooks';
 
@@ -40,27 +40,14 @@ const ProductDetails = () => {
 
 	const handleAddToCart = async () => {
 		if (authenticatedUser) {
-			toast.promise(
-				() => {
-					return addToCartLoggedIn({ product: selectedProduct, quantity });
-				},
-				{
-					pending: ADD_TO_CART_PENDING_MESSAGE,
-					success: ADD_TO_CART_SUCCESS_MESSAGE,
-					error: ADD_TO_CART_ERROR_MESSAGE,
-				}
-			);
+			try {
+				await addToCartLoggedIn({ product: selectedProduct, quantity });
+				toast.success(SUCCESS_ADD_TO_CART);
+			} catch (error) {
+				toast.error(ERROR_ADD_TO_CART);
+			}
 		} else {
-			toast.promise(
-				() => {
-					return addToCartLoggedOut({ product: selectedProduct, quantity });
-				},
-				{
-					pending: ADD_TO_CART_PENDING_MESSAGE,
-					success: ADD_TO_CART_SUCCESS_MESSAGE,
-					error: ADD_TO_CART_ERROR_MESSAGE,
-				}
-			);
+			await addToCartLoggedOut({ product: selectedProduct, quantity });
 		}
 		setQuantity(1);
 	};
