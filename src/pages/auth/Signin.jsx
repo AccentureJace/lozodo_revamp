@@ -5,8 +5,8 @@ import { RiLock2Line } from 'react-icons/ri';
 import { Link, useNavigate } from 'react-router-dom';
 import { authService } from '../../services';
 import { useAuthenticationStore } from '../../store';
-import { PRODUCT_DASHBOARD, PATH_REGISTER } from '../../constants/routes';
 import { setCommonToken } from '../../axios';
+import { PRODUCT_DASHBOARD, PATH_REGISTER } from '../../constants/routes';
 import { INVALID_PASSWORD, INVALID_USERNAME, VALIDATION_PASSWORD, VALIDATION_USERNAME, SUCCESS_SIGNIN, ERROR_401 } from '../../constants/auth';
 
 const Signin = () => {

@@ -8,8 +8,8 @@ import { ImCart } from 'react-icons/im';
 import { TbTruckReturn } from 'react-icons/tb';
 import { useParams } from 'react-router-dom';
 import { useAuthenticationStore } from '../../store';
-import { SUCCESS_ADD_TO_CART, ERROR_ADD_TO_CART } from '../../constants/cart';
 import { handleFormatAmountToPHP } from '../../utils';
+import { SUCCESS_ADD_TO_CART, ERROR_ADD_TO_CART } from '../../constants/cart';
 import { useProductHooks, useCartHooks } from '../../hooks';
 
 const ProductDetails = () => {
