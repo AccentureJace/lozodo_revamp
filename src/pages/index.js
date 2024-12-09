@@ -1,7 +1,4 @@
-import Signin from "./auth/Signin";
-import Signup from "./auth/Signup";
-import Checkout from "./user/Checkout";
-import Dashboard from "./user/Dashboard";
-import ProductDetails from "./user/ProductDetails";
+import { Signin, Signup } from './auth';
+import { Dashboard, ProductDetails, Checkout } from './user';
 
 export {Signin, Signup, Dashboard, ProductDetails, Checkout};

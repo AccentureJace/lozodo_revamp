@@ -1,5 +1,6 @@
 import { axios } from '../../axios';
 import { PATH_PRODUCTS } from '../../constants/service';
+import { handleFormatAmountToPHP } from '../../utils';
 
 const productService = {
 	getAllProducts: async () => {
@@ -33,7 +34,7 @@ const productService = {
 				product_img,
 				product_description,
 				category: [category],
-				price,
+				price: handleFormatAmountToPHP(price),
 				currency: 'peso',
 				created_by,
 				other_details: null,
@@ -59,7 +60,7 @@ const productService = {
 				product_img,
 				product_description,
 				category,
-				price,
+				price: handleFormatAmountToPHP(price),
 				currency,
 				created_by,
 			});
