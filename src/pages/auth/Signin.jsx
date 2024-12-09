@@ -3,7 +3,7 @@ import { Button, Divider, Flex, Form, Input, Spin } from 'antd';
 import { toast } from 'react-toastify';
 import { RiLock2Line } from 'react-icons/ri';
 import { Link, useNavigate } from 'react-router-dom';
-import { authService } from '../../services';
+import { authService, userService } from '../../services';
 import { useAuthenticationStore } from '../../store';
 import { PRODUCT_DASHBOARD, PATH_REGISTER } from '../../constants/routes';
 import { INVALID_PASSWORD, INVALID_USERNAME, VALIDATION_PASSWORD, VALIDATION_USERNAME, SUCCESS_SIGNIN, ERROR_401 } from '../../constants/auth';
@@ -26,7 +26,7 @@ const Signin = () => {
 			const result = await authService.login(loginData);
 			const { message, token } = result;
 			setCommonToken(token);
-			const user = await authService.getUserByUUID();
+			const user = await userService.getUserByUUID();
 
 			if (message === SUCCESS_SIGNIN) {
 				setAuthenticatedUser(user);
