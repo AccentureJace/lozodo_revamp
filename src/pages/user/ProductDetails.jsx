@@ -84,14 +84,12 @@ const ProductDetails = () => {
                                                 Buy Now
                                             </p>
                                         </Button>
-                                        <Link to={PRODUCT_CHECKOUT}>
-                                            <Button className='tw-bg-blue-500 tw-px-5 tw-py-5 tw-flex tw-gap-2'>
-                                                <ImCart className='tw-text-white tw-text-xl' />
-                                                <p className='tw-text-white'>
-                                                    Add to Cart
-                                                </p>
-                                            </Button>
-                                        </Link>
+                                        <Button className='tw-bg-blue-500 tw-px-5 tw-py-5 tw-flex tw-gap-2'>
+                                            <ImCart className='tw-text-white tw-text-xl' />
+                                            <p className='tw-text-white'>
+                                                Add to Cart
+                                            </p>
+                                        </Button>
                                     </div>
                                 </Col>
                             </Row>
