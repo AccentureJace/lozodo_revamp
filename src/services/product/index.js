@@ -45,7 +45,7 @@ const productService = {
 				product_img,
 				product_description,
 				category,
-				price: handleFormatAmountToPHP(price),
+				price: price,
 				currency,
 				created_by,
 			});
