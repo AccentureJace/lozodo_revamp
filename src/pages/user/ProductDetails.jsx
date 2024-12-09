@@ -86,13 +86,13 @@ const ProductDetails = () => {
 										<Button icon={<FaMinus />} onClick={handleSubtractQuantity} />
 									</div>
 									<div className='tw-pt-10 tw-flex tw-gap-3 '>
-										<Button className='tw-bg-red-500 tw-px-5 tw-py-5 tw-flex tw-gap-2'>
-											<GiShoppingBag className='tw-text-white tw-text-xl' />
-											<p className='tw-text-white'>Buy Now</p>
+										<Button className='tw-bg-red-500 tw-px-5 tw-py-5 tw-flex tw-gap-2 tw-text-white'>
+											<GiShoppingBag className='tw-text-xl' />
+											<p>Buy Now</p>
 										</Button>
-										<Button className='tw-bg-blue-500 tw-px-5 tw-py-5 tw-flex tw-gap-2 hover:tw-bg-blue-200 tw-items-center' onClick={handleAddToCart} disabled={addToCartLoading}>
-											<ImCart className='tw-text-white tw-text-xl tw-container tw-pe-2' />
-											<p className='tw-text-white'>Add to Cart</p>
+										<Button className='tw-bg-blue-500 tw-px-5 tw-py-5 tw-flex tw-gap-2 tw-items-center tw-text-white' onClick={handleAddToCart} disabled={addToCartLoading}>
+											<ImCart className=' tw-text-xl tw-container tw-pe-2' />
+											<p>Add to Cart</p>
 										</Button>
 									</div>
 								</Col>
