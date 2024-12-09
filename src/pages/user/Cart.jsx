@@ -3,11 +3,11 @@ import Swal from 'sweetalert2';
 import { toast } from 'react-toastify';
 import { AiFillDelete } from 'react-icons/ai';
 import { CartCard, CartSummary } from '../../components';
-import { useCartHooks } from '../../hooks';
 import { cartService } from '../../services';
 import { useAuthenticationStore, useCartStore } from '../../store';
 import { cartStorage } from '../../utils';
 import { REMOVE_FROM_CART_NONE_ERROR, REMOVE_FROM_CART_SUCCESS_MESSAGE } from '../../constants/cart';
+import { useCartHooks } from '../../hooks';
 
 const Cart = () => {
 	const { itemsInCart, setItemsInCart } = useCartStore((state) => state);

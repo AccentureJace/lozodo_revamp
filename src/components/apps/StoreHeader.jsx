@@ -6,10 +6,10 @@ import { Link } from 'react-router-dom';
 import { lozodo_logo } from '../../assets/images';
 import { PATH_CART, PRODUCT_DASHBOARD } from '../../constants/routes';
 import { useAuthenticationStore, useCartStore } from '../../store';
-import { useCartHooks } from '../../hooks';
 import { useEffect } from 'react';
 import { JWTStorage } from '../../utils';
-import { authService } from '../../services';
+import { userService } from '../../services';
+import { useCartHooks } from '../../hooks';
 
 const StoreHeader = () => {
 	const { itemsInCart } = useCartStore((state) => state);
@@ -18,7 +18,7 @@ const StoreHeader = () => {
 
 	useEffect(() => {
 		if (JWTStorage.getToken()) {
-			const user = authService.getUserByUUID();
+			const user = userService.getUserByUUID();
 			setAuthenticatedUser(user);
 		}
 	}, []);

@@ -18,18 +18,8 @@ const Dashboard = () => {
 					<ProductBanner />
 					<Row gutter={16}>
 						{products.map((product) => (
-							<Col
-								key={product.product_id}
-								className='gutter-row'
-								span={4}
-								onClick={() =>
-									navigate(`/product/${product.product_id}`)
-								}
-							>
-								<ProductCard
-									key={product.product_id}
-									product={product}
-								/>
+							<Col key={product.product_id} className='gutter-row' span={4} onClick={() => navigate(`/product/${product.product_id}`)}>
+								<ProductCard key={product.product_id} product={product} />
 							</Col>
 						))}
 					</Row>

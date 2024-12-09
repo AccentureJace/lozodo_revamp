@@ -1,12 +1,8 @@
 import { axios } from '../../axios';
 import { JWTStorage } from '../../utils';
-import { PATH_LOGIN, PATH_LOGOUT, PATH_REGISTER, PATH_RESET_PASSWORD, PATH_VERIFY_USERNAME, PATH_GET_USER_BY_UUID } from '../../constants/service';
+import { PATH_LOGIN, PATH_LOGOUT, PATH_REGISTER, PATH_RESET_PASSWORD, PATH_VERIFY_USERNAME } from '../../constants/service';
 
 const authService = {
-	getUserByUUID: async () => {
-		const result = await axios.get(PATH_GET_USER_BY_UUID);
-		return result.data;
-	},
 	login: async (login_details) => {
 		try {
 			const { username, password } = login_details;

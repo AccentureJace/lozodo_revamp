@@ -7,10 +7,10 @@ import { GiShoppingBag, GiShieldDisabled } from 'react-icons/gi';
 import { ImCart } from 'react-icons/im';
 import { TbTruckReturn } from 'react-icons/tb';
 import { useParams } from 'react-router-dom';
-import { useProductHooks, useCartHooks } from '../../hooks';
 import { useAuthenticationStore } from '../../store';
 import { ADD_TO_CART_SUCCESS_MESSAGE, ADD_TO_CART_PENDING_MESSAGE, ADD_TO_CART_ERROR_MESSAGE } from '../../constants/cart';
 import { handleFormatAmountToPHP } from '../../utils';
+import { useProductHooks, useCartHooks } from '../../hooks';
 
 const ProductDetails = () => {
 	const { id } = useParams();
@@ -56,9 +56,9 @@ const ProductDetails = () => {
 					return addToCartLoggedOut({ product: selectedProduct, quantity });
 				},
 				{
-					pending: 'Adding to cart...',
+					pending: ADD_TO_CART_PENDING_MESSAGE,
 					success: ADD_TO_CART_SUCCESS_MESSAGE,
-					error: 'Something went wrong',
+					error: ADD_TO_CART_ERROR_MESSAGE,
 				}
 			);
 		}
@@ -91,7 +91,7 @@ const ProductDetails = () => {
 												})}
 										</span>
 									</p>
-									<p className='tw-text-4xl tw-text-red-500'>{handleFormatAmountToPHP(price)}</p>
+									<p className='tw-text-4xl tw-text-red-500'>{price && handleFormatAmountToPHP(price)}</p>
 									<div className='tw-pt-10 tw-flex tw-gap-3'>
 										<p className='tw-text-md tw-pt-1'>Quantity</p>
 										<Button icon={<FaPlus />} onClick={handleAddQuantity} />
