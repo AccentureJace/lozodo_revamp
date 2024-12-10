@@ -20,13 +20,9 @@ const StoreHeader = () => {
 	useEffect(() => {
 		if (JWTStorage.getToken()) {
 			const loadUser = async () => {
-				try {
-					const user = await userService.getUserByUUID();
-					if (user.data) {
-						setAuthenticatedUser(user.data);
-					}
-				} catch (error) {
-					toast.error('Error with fetching API');
+				const user = await userService.getUserByUUID();
+				if (user.data) {
+					setAuthenticatedUser(user.data);
 				}
 			};
 
