@@ -7,6 +7,7 @@ import {
     Dashboard,
     AdminUser,
     Checkout,
+    Cart,
 } from '../pages';
 import { StoreLayout } from '../layout';
 import {
