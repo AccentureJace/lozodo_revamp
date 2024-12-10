@@ -1,6 +1,6 @@
 import { AdminDashboard, AdminUser } from './admin';
 import { Signin, Signup } from './auth';
-import { Dashboard, ProductDetails, Cart } from './user';
+import { Dashboard, ProductDetails, Checkout, Transaction, Cart } from './user';
 
 export {
 	AdminDashboard,
@@ -9,5 +9,7 @@ export {
 	Signup,
 	Dashboard,
 	ProductDetails,
+  Checkout,
+  Transaction,
 	Cart,
 };
