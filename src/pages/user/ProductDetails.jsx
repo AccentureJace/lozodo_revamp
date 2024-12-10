@@ -5,9 +5,8 @@ import { FaPlus, FaMinus } from 'react-icons/fa';
 import { GiShoppingBag, GiShieldDisabled } from 'react-icons/gi';
 import { ImCart } from 'react-icons/im';
 import { TbTruckReturn } from 'react-icons/tb';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useProductHooks } from '../../hooks';
-import { PRODUCT_CHECKOUT } from '../../constants/routes';
 
 const ProductDetails = () => {
     const { id } = useParams();

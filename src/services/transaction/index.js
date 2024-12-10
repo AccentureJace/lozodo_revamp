@@ -5,6 +5,7 @@ const transactionService = {
 	getTransactions: async () => {
 		try {
 			const result = await axios.get(PATH_TRANSACTIONS);
+			console.log('result.data: ', result.data)
 			return result.data;
 		} catch (error) {
 			return error;

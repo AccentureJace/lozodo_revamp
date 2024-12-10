@@ -1,21 +1,26 @@
-import { Button, Card, Col, Flex, Row, Divider } from 'antd';
 import React from 'react';
-import { FaCircleCheck, FaRegCircleCheck } from 'react-icons/fa6';
+import { Button, Card, Col, Flex, Row, Divider } from 'antd';
+import { FaCircleCheck, FaRegCircle } from 'react-icons/fa6';
 import { cash_payment, gcash_payment } from '../../assets/images';
 
 const Checkout = () => {
     return (
         <div className='tw-px-5 tw-py-20'>
             <Row gutter={16}>
-                <Col span={16}>
+                <Col
+                    xs={{
+                        span: 24,
+                    }}
+                    md={{
+                        span: 14,
+                    }}
+                    lg={{
+                        span: 16,
+                    }}
+                >
                     <Card
                         title='Shipping Address'
-                        extra={
-                            <Button color='default' variant='link'>
-                                Edit
-                            </Button>
-                        }
-                        className='tw-mb-5'
+                        className='tw-mb-5 tw-border tw-border-gray-300'
                     >
                         <Flex vertical gap={5} className='tw-p-6'>
                             <p>Felix Angelo Siena</p>
@@ -27,61 +32,70 @@ const Checkout = () => {
                         </Flex>
                     </Card>
 
-                    <Card title='Package 1 of 1'>
-                        <Flex vertical gap={5} className='tw-p-6'>
-                            <Flex gap={10}>
+                    <Card
+                        title='Package 1 of 1'
+                        className='tw-border tw-border-gray-300'
+                    >
+                        <Flex vertical className='tw-p-6'>
+                            <Flex gap={10} wrap>
                                 <Button
-                                    icon={
-                                        <FaCircleCheck className='tw-text-xl' />
-                                    }
+                                    icon={<FaCircleCheck />}
                                     color='primary'
                                     variant='outlined'
-                                    className='tw-px-5 tw-py-7'
+                                    className='tw-py-7'
                                 >
                                     <Flex
                                         vertical
                                         justify='flex-start'
                                         align='flex-start'
-                                        className='tw-ml-5'
+                                        className='tw-ml-3'
                                     >
                                         <p>38.00</p>
-                                        <p>Priority delivery</p>
+                                        <p>Standard delivery</p>
                                     </Flex>
                                 </Button>
                                 <Button
-                                    icon={
-                                        <FaRegCircleCheck className='tw-text-xl' />
-                                    }
-                                    className='tw-px-5 tw-py-7 tw-border-blue-400'
+                                    icon={<FaRegCircle />}
+                                    className='tw-py-7 tw-border-blue-400'
                                 >
                                     <Flex
                                         vertical
                                         justify='flex-start'
                                         align='flex-start'
-                                        className='tw-ml-5'
+                                        className='tw-ml-3'
                                     >
                                         <p>57.00</p>
                                         <p>Priority delivery</p>
                                     </Flex>
                                 </Button>
                             </Flex>
-                            <Flex gap={30} className='tw-my-8'>
-                                <div className='tw-w-24 tw-h-21 tw-bg-black'></div>
+                            <Flex gap={10} className='tw-my-8'>
+                                <img src={gcash_payment} alt='' />
                                 <div>
-                                    <p className='tw-text-lg'>
+                                    <p>
                                         BOSS BOSSING Unisex Cotton T-Shirt -
                                         Comfortable & Stylish Casual Wear
                                     </p>
-                                    <span className='tw-text-orange-500 tw-font-semibold tw-text-lg'>
+                                    <p className='tw-text-orange-500 tw-font-semibold tw-text-lg'>
                                         86.24
-                                    </span>
+                                    </p>
                                 </div>
                             </Flex>
                         </Flex>
                     </Card>
                 </Col>
-                <Col span={8}>
-                    <Card className='tw-p-6 tw-border tw-border-gray-300'>
+                <Col
+                    xs={{
+                        span: 24,
+                    }}
+                    md={{
+                        span: 10,
+                    }}
+                    lg={{
+                        span: 8,
+                    }}
+                >
+                    <Card className='tw-p-6 tw-border tw-border-gray-300 tw-mt-5 md:tw-mt-0'>
                         <p className='tw-text-lg'>Select Payment Method</p>
 
                         <Flex
@@ -117,25 +131,33 @@ const Checkout = () => {
                                         </p>
                                     </div>
                                 </Flex>
-                                <FaRegCircleCheck className='tw-text-lg tw-mr-3' />
+                                <FaRegCircle className='tw-text-lg tw-mr-3' />
                             </Flex>
                         </Flex>
 
                         <section>
-                            <p className='tw-text-lg tw-leading-9'>
-                                Order Summary
-                            </p>
+                            <p className='tw-text-lg tw-mb-8'>Order Summary</p>
                             <>
-                                <p className='tw-text-right tw-mt-5'>38.00</p>
-                                <div className='tw-flex tw-justify-between tw-mt-2'>
+                                <div className='tw-flex tw-justify-between tw-mb-3'>
+                                    <p>Subtotal (1 Items)</p>
+                                    <p>₱86.24</p>
+                                </div>
+
+                                <div className='tw-flex tw-justify-between'>
+                                    <p>Shipping Fee</p>
+                                    <p>₱38.00</p>
+                                </div>
+
+                                {/* <div className='tw-flex tw-justify-between'>
                                     <p>Discount</p>
                                     <p>0.00</p>
-                                </div>
+                                </div> */}
                             </>
-                            <hr className='tw-border tw-border-gray-300 tw-my-4' />
-                            <p className='tw-text-right tw-text-orange-500 tw-text-lg tw-mb-2'>
-                                86.24
-                            </p>
+                            <Divider className='tw-border tw-border-gray-300' />
+                            <div className='tw-flex tw-justify-between tw-text-xl  tw-mb-5 tw-font-semibold'>
+                                <p>SubTotal</p>
+                                <p className='tw-text-orange-500 '>₱124.24</p>
+                            </div>
                         </section>
                         <Button type='primary' block>
                             Buy Now
