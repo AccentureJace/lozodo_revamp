@@ -4,9 +4,10 @@ import { StoreLayout } from '../layout';
 import {
     PRODUCT_DASHBOARD,
     PRODUCT_DETAILS,
-    PRODUCT_CHECKOUT,
     PATH_LOGIN,
+    PRODUCT_CHECKOUT,
     PATH_REGISTER,
+    PATH_CART,
 } from '../constants/routes';
 
 export const router = createBrowserRouter([
@@ -21,6 +22,10 @@ export const router = createBrowserRouter([
             {
                 path: PRODUCT_DETAILS,
                 element: <ProductDetails />,
+            },
+            {
+                path: PATH_CART,
+                element: <Cart />,
             },
             {
                 path: PRODUCT_CHECKOUT,

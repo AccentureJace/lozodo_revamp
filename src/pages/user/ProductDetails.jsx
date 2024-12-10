@@ -1,16 +1,26 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Col, Row, Card, Button, Divider, Spin } from 'antd';
+import { toast } from 'react-toastify';
 import { CgArrowsExchangeAlt } from 'react-icons/cg';
 import { FaPlus, FaMinus } from 'react-icons/fa';
 import { GiShoppingBag, GiShieldDisabled } from 'react-icons/gi';
 import { ImCart } from 'react-icons/im';
 import { TbTruckReturn } from 'react-icons/tb';
-import { Link, useParams } from 'react-router-dom';
-import { useProductHooks } from '../../hooks';
-import { PRODUCT_CHECKOUT } from '../../constants/routes';
+import { useParams } from 'react-router-dom';
+import { useAuthenticationStore } from '../../store';
+import { handleFormatAmountToPHP } from '../../utils';
+import { SUCCESS_ADD_TO_CART, ERROR_ADD_TO_CART } from '../../constants/cart';
+import { useProductHooks, useCartHooks } from '../../hooks';
 
 const ProductDetails = () => {
     const { id } = useParams();
+    const {
+        isLoading: addToCartLoading,
+        addToCartLoggedIn,
+        addToCartLoggedOut,
+    } = useCartHooks();
+    const [quantity, setQuantity] = useState(1);
+    const { authenticatedUser } = useAuthenticationStore((state) => state);
     const {
         selectedProduct,
         isLoading,
@@ -33,6 +43,30 @@ const ProductDetails = () => {
         price,
         product_description,
     } = selectedProduct;
+
+    const handleAddQuantity = () => {
+        setQuantity((curr) => curr + 1);
+    };
+
+    const handleSubtractQuantity = () => {
+        if (quantity > 1) {
+            setQuantity((curr) => curr - 1);
+        }
+    };
+
+    const handleAddToCart = async () => {
+        if (authenticatedUser) {
+            try {
+                await addToCartLoggedIn({ product: selectedProduct, quantity });
+                toast.success(SUCCESS_ADD_TO_CART);
+            } catch (error) {
+                toast.error(ERROR_ADD_TO_CART);
+            }
+        } else {
+            await addToCartLoggedOut({ product: selectedProduct, quantity });
+        }
+        setQuantity(1);
+    };
 
     return (
         <div className='tw-py-10 tw-px-10'>
@@ -67,28 +101,35 @@ const ProductDetails = () => {
                                         </span>
                                     </p>
                                     <p className='tw-text-4xl tw-text-red-500'>
-                                        {price}
+                                        {price &&
+                                            handleFormatAmountToPHP(price)}
                                     </p>
                                     <div className='tw-pt-10 tw-flex tw-gap-3'>
                                         <p className='tw-text-md tw-pt-1'>
                                             Quantity
                                         </p>
-                                        <Button icon={<FaPlus />} />
-                                        <p className='tw-text-lg'>1</p>
-                                        <Button icon={<FaMinus />} />
+                                        <Button
+                                            icon={<FaPlus />}
+                                            onClick={handleAddQuantity}
+                                        />
+                                        <p className='tw-text-lg'>{quantity}</p>
+                                        <Button
+                                            icon={<FaMinus />}
+                                            onClick={handleSubtractQuantity}
+                                        />
                                     </div>
                                     <div className='tw-pt-10 tw-flex tw-gap-3 '>
-                                        <Button className='tw-bg-red-500 tw-px-5 tw-py-5 tw-flex tw-gap-2'>
-                                            <GiShoppingBag className='tw-text-white tw-text-xl' />
-                                            <p className='tw-text-white'>
-                                                Buy Now
-                                            </p>
+                                        <Button className='tw-bg-red-500 tw-px-5 tw-py-5 tw-flex tw-gap-2 tw-text-white'>
+                                            <GiShoppingBag className='tw-text-xl' />
+                                            <p>Buy Now</p>
                                         </Button>
-                                        <Button className='tw-bg-blue-500 tw-px-5 tw-py-5 tw-flex tw-gap-2'>
-                                            <ImCart className='tw-text-white tw-text-xl' />
-                                            <p className='tw-text-white'>
-                                                Add to Cart
-                                            </p>
+                                        <Button
+                                            className='tw-bg-blue-500 tw-px-5 tw-py-5 tw-flex tw-gap-2 tw-items-center tw-text-white'
+                                            onClick={handleAddToCart}
+                                            disabled={addToCartLoading}
+                                        >
+                                            <ImCart className=' tw-text-xl tw-container tw-pe-2' />
+                                            <p>Add to Cart</p>
                                         </Button>
                                     </div>
                                 </Col>
