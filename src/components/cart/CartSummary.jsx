@@ -13,8 +13,6 @@ const CartSummary = () => {
 		return prev + next.items[0].total_price;
 	}, 0);
 
-	totalPrice = handleFormatAmountToPHP(totalPrice);
-
 	return (
 		<div className='tw-border tw-border-slate-400 tw-flex tw-flex-col tw-w-1/3 tw-h-full tw-bg-white tw-py-6 tw-px-4 tw-gap-3'>
 			<Typography className='tw-text-xl'>Order Summary</Typography>
@@ -22,19 +20,19 @@ const CartSummary = () => {
 				<div className='tw-flex'>
 					<Typography className='tw-text-lg'>Subtotal ({totalQuantity} Items)</Typography>
 					<div className='tw-flex tw-ms-auto tw-w-40 tw-justify-end'>
-						<Typography className='tw-text-lg'>{totalPrice}</Typography>
+						<Typography className='tw-text-lg'>{handleFormatAmountToPHP(totalPrice)}</Typography>
 					</div>
 				</div>
 				<div className='tw-flex'>
 					<Typography className='tw-text-lg'>Shipping Fee</Typography>
 					<div className='tw-flex tw-ms-auto tw-w-40 tw-justify-end'>
-						<Typography className='tw-text-lg'>₱38.00</Typography>
+						<Typography className='tw-text-lg'>{handleFormatAmountToPHP(38)}</Typography>
 					</div>
 				</div>
 				<div className='tw-flex'>
 					<Typography className='tw-text-lg'>Discount</Typography>
 					<div className='tw-flex tw-ms-auto tw-w-40 tw-justify-end'>
-						<Typography className='tw-text-lg'>₱0.00</Typography>
+						<Typography className='tw-text-lg'>{handleFormatAmountToPHP(0)}</Typography>
 					</div>
 				</div>
 			</div>
@@ -43,7 +41,7 @@ const CartSummary = () => {
 				<div className='tw-flex tw-pe-2'>
 					<Typography className='tw-text-lg'>Total</Typography>
 					<div className='tw-flex tw-ms-auto tw-w-40 tw-justify-end'>
-						<Typography className='tw-text-lg tw-text-red-500'>{totalPrice}</Typography>
+						<Typography className='tw-text-lg tw-text-red-500'>{handleFormatAmountToPHP(totalPrice)}</Typography>
 					</div>
 				</div>
 				<div className='tw-flex tw-justify-end tw-ms-auto'>

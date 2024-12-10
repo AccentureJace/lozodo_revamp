@@ -1,5 +1,5 @@
 import { VALIDATION_CONFIRM_PASSWORD } from '../constants/auth';
-import { CART_STORAGE } from '../constants/cart';
+import { CART_STORAGE_KEY } from '../constants/cart';
 import { EMPTY_FIELD_ERROR, INVALID_PASSWORD_ERROR, INVALID_PHONE_NUMBER_ERROR, SESSION_TOKEN } from '../constants/common';
 
 export const JWTStorage = {
@@ -17,13 +17,13 @@ export const JWTStorage = {
 
 export const cartStorage = {
 	getCart: () => {
-		return localStorage.getItem(CART_STORAGE);
+		return localStorage.getItem(CART_STORAGE_KEY);
 	},
 	setCart: (cartItems) => {
-		localStorage.setItem(CART_STORAGE, cartItems);
+		localStorage.setItem(CART_STORAGE_KEY, cartItems);
 	},
 	clearCart: () => {
-		localStorage.removeItem(CART_STORAGE);
+		localStorage.removeItem(CART_STORAGE_KEY);
 	},
 };
 

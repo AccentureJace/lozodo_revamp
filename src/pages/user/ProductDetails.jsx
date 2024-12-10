@@ -8,8 +8,8 @@ import { ImCart } from 'react-icons/im';
 import { TbTruckReturn } from 'react-icons/tb';
 import { useParams } from 'react-router-dom';
 import { useAuthenticationStore } from '../../store';
-import { ADD_TO_CART_SUCCESS_MESSAGE, ADD_TO_CART_PENDING_MESSAGE, ADD_TO_CART_ERROR_MESSAGE } from '../../constants/cart';
 import { handleFormatAmountToPHP } from '../../utils';
+import { SUCCESS_ADD_TO_CART, ERROR_ADD_TO_CART } from '../../constants/cart';
 import { useProductHooks, useCartHooks } from '../../hooks';
 
 const ProductDetails = () => {
@@ -40,27 +40,14 @@ const ProductDetails = () => {
 
 	const handleAddToCart = async () => {
 		if (authenticatedUser) {
-			toast.promise(
-				() => {
-					return addToCartLoggedIn({ product: selectedProduct, quantity });
-				},
-				{
-					pending: ADD_TO_CART_PENDING_MESSAGE,
-					success: ADD_TO_CART_SUCCESS_MESSAGE,
-					error: ADD_TO_CART_ERROR_MESSAGE,
-				}
-			);
+			try {
+				await addToCartLoggedIn({ product: selectedProduct, quantity });
+				toast.success(SUCCESS_ADD_TO_CART);
+			} catch (error) {
+				toast.error(ERROR_ADD_TO_CART);
+			}
 		} else {
-			toast.promise(
-				() => {
-					return addToCartLoggedOut({ product: selectedProduct, quantity });
-				},
-				{
-					pending: ADD_TO_CART_PENDING_MESSAGE,
-					success: ADD_TO_CART_SUCCESS_MESSAGE,
-					error: ADD_TO_CART_ERROR_MESSAGE,
-				}
-			);
+			await addToCartLoggedOut({ product: selectedProduct, quantity });
 		}
 		setQuantity(1);
 	};
@@ -99,13 +86,13 @@ const ProductDetails = () => {
 										<Button icon={<FaMinus />} onClick={handleSubtractQuantity} />
 									</div>
 									<div className='tw-pt-10 tw-flex tw-gap-3 '>
-										<Button className='tw-bg-red-500 tw-px-5 tw-py-5 tw-flex tw-gap-2'>
-											<GiShoppingBag className='tw-text-white tw-text-xl' />
-											<p className='tw-text-white'>Buy Now</p>
+										<Button className='tw-bg-red-500 tw-px-5 tw-py-5 tw-flex tw-gap-2 tw-text-white'>
+											<GiShoppingBag className='tw-text-xl' />
+											<p>Buy Now</p>
 										</Button>
-										<Button className='tw-bg-blue-500 tw-px-5 tw-py-5 tw-flex tw-gap-2 hover:tw-bg-blue-200 tw-items-center' onClick={handleAddToCart} disabled={addToCartLoading}>
-											<ImCart className='tw-text-white tw-text-xl tw-container tw-pe-2' />
-											<p className='tw-text-white'>Add to Cart</p>
+										<Button className='tw-bg-blue-500 tw-px-5 tw-py-5 tw-flex tw-gap-2 tw-items-center tw-text-white' onClick={handleAddToCart} disabled={addToCartLoading}>
+											<ImCart className=' tw-text-xl tw-container tw-pe-2' />
+											<p>Add to Cart</p>
 										</Button>
 									</div>
 								</Col>

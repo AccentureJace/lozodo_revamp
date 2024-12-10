@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Col, Row, Input, Badge, Dropdown, Space, Button, Typography } from 'antd';
+import { Col, Row, Input, Badge, Dropdown, Space, Button } from 'antd';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
 import { FaEdit } from 'react-icons/fa';
 import { FiUser } from 'react-icons/fi';
