@@ -1,4 +1,4 @@
-import { Button, Card, Col, Flex, Row, Divider } from 'antd';
+import { Button, Card, Col, Flex, Row } from 'antd';
 import React from 'react';
 import { FaCircleCheck, FaRegCircleCheck } from 'react-icons/fa6';
 import { cash_payment, gcash_payment } from '../../assets/images';
