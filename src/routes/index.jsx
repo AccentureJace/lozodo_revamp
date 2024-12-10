@@ -5,7 +5,7 @@ import {
     PRODUCT_DASHBOARD,
     PRODUCT_DETAILS,
     PATH_LOGIN,
-    PRODUCT_CHECKOUT,
+    PATH_PRODUCT_CHECKOUT,
     PATH_REGISTER,
     PATH_CART,
 } from '../constants/routes';
@@ -28,7 +28,7 @@ export const router = createBrowserRouter([
                 element: <Cart />,
             },
             {
-                path: PRODUCT_CHECKOUT,
+                path: PATH_PRODUCT_CHECKOUT,
                 element: <Checkout />,
             },
         ],
