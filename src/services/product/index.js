@@ -21,20 +21,13 @@ const productService = {
 	},
 	createProduct: async (product_details) => {
 		try {
-			const {
-				product_name,
-				product_img,
-				product_description,
-				category,
-				price,
-				created_by,
-			} = product_details;
+			const { product_name, product_img, product_description, category, price, created_by } = product_details;
 			const result = await axios.post(PATH_PRODUCTS, {
 				product_name,
 				product_img,
 				product_description,
 				category: [category],
-				price: handleFormatAmountToPHP(price),
+				price,
 				currency: 'peso',
 				created_by,
 				other_details: null,
@@ -46,21 +39,13 @@ const productService = {
 	},
 	updateProduct: async (product_id, product_details) => {
 		try {
-			const {
-				product_name,
-				product_img,
-				product_description,
-				category,
-				price,
-				currency,
-				created_by,
-			} = product_details;
+			const { product_name, product_img, product_description, category, price, currency, created_by } = product_details;
 			const result = await axios.put(`${PATH_PRODUCTS}/${product_id}`, {
 				product_name,
 				product_img,
 				product_description,
 				category,
-				price: handleFormatAmountToPHP(price),
+				price,
 				currency,
 				created_by,
 			});

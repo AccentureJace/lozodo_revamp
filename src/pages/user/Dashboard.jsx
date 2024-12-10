@@ -9,14 +9,13 @@ import {
 import { useProductHooks, useCategoryHooks } from '../../hooks';
 
 const Dashboard = () => {
+
     const { products, isLoading } = useProductHooks();
     const { selectedCategory } = useCategoryHooks();
 
     let navigate = useNavigate();
 
-    const filtered_products = selectedCategory
-        ? products.filter((product) => product.category_id === selectedCategory)
-        : products;
+	const filtered_products = selectedCategory ? products.filter((product) => product.category_id === selectedCategory) : products;
 
     return (
         <div>
