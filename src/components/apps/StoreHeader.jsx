@@ -3,47 +3,90 @@ import { Col, Row, Input, Badge, Dropdown, Space, Button } from 'antd';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
 import { FaEdit } from 'react-icons/fa';
 import { FiUser } from 'react-icons/fi';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { lozodo_logo } from '../../assets/images';
-import { PATH_CART, PRODUCT_DASHBOARD } from '../../constants/routes';
+import { PATH_CART, PATH_LOGIN, PATH_REGISTER, PRODUCT_DASHBOARD } from '../../constants/routes';
 import { useAuthenticationStore, useCartStore } from '../../store';
 import { JWTStorage } from '../../utils';
-import { userService } from '../../services';
+import { authService, userService } from '../../services';
 import { useCartHooks } from '../../hooks';
 
 const StoreHeader = () => {
 	const { itemsInCart } = useCartStore((state) => state);
-	const { setAuthenticatedUser } = useAuthenticationStore((state) => state);
+	const { authenticatedUser, setAuthenticatedUser } = useAuthenticationStore((state) => state);
+	const navigate = useNavigate();
 	useCartHooks();
 
 	useEffect(() => {
 		if (JWTStorage.getToken()) {
-			const user = userService.getUserByUUID();
-			setAuthenticatedUser(user);
+			const loadUser = async () => {
+				const user = await userService.getUserByUUID();
+				if (user.data) {
+					setAuthenticatedUser(user.data);
+				}
+			};
+
+			loadUser();
 		}
 	}, []);
 
-	const items = [
-		{
-			label: (
-				<Button type='primary'>
-					{' '}
-					<FiUser className='tw-text-sm tw-text-white' />
-					Sign-in
-				</Button>
-			),
-			key: '0',
-		},
-		{
-			label: (
-				<Button color='default' variant='text'>
-					{' '}
-					<FaEdit className='tw-text-sm tw-text-black' /> Sign-up{' '}
-				</Button>
-			),
-			key: '1',
-		},
-	];
+	const handleLogout = async () => {
+		await authService.logout();
+		setAuthenticatedUser(null);
+		navigate('/');
+	};
+
+	const items = authenticatedUser
+		? [
+				{
+					label: (
+						<Button className='tw-flex tw-w-full tw-justify-start'>
+							<FiUser className='tw-text-sm' />
+							Manage Account
+						</Button>
+					),
+					key: '0',
+				},
+				{
+					label: (
+						<Button className='tw-flex tw-w-full tw-justify-start'>
+							<FaEdit className='tw-text-sm ' /> Change Password
+						</Button>
+					),
+					key: '1',
+				},
+				{
+					label: (
+						<Button className='tw-flex tw-w-full tw-justify-start' onClick={handleLogout}>
+							<FaEdit className='tw-text-sm' /> Sign-out
+						</Button>
+					),
+					key: '2',
+				},
+		  ]
+		: [
+				{
+					label: (
+						<Link to={PATH_LOGIN}>
+							<Button className='tw-flex tw-w-full tw-justify-start'>
+								<FiUser className='tw-text-sm ' />
+								Sign-in
+							</Button>
+						</Link>
+					),
+					key: '0',
+				},
+				{
+					label: (
+						<Link to={PATH_REGISTER}>
+							<Button variant='text' className='tw-flex tw-w-full tw-justify-start'>
+								<FaEdit className='tw-text-sm ' /> Sign-up{' '}
+							</Button>
+						</Link>
+					),
+					key: '1',
+				},
+		  ];
 
 	return (
 		<div className='flex'>
@@ -54,13 +97,13 @@ const StoreHeader = () => {
 					</Link>
 				</Col>
 
-				<Col className='gutter-row' span={17}>
+				<Col className='gutter-row' span={authenticatedUser ? 16 : 17}>
 					<div className='tw-flex tw-justify-center tw-items-center h-full'>
 						<Input size='large' className='tw-w-full' placeholder='Search products' />
 					</div>
 				</Col>
 
-				<Col className='gutter-row tw-mt-2' span={2}>
+				<Col className='gutter-row tw-mt-2' span={authenticatedUser ? 3 : 2}>
 					<div className='tw-flex tw-justify-end tw-gap-4 '>
 						<Dropdown
 							menu={{
@@ -70,6 +113,7 @@ const StoreHeader = () => {
 						>
 							<a onClick={(e) => e.preventDefault()}>
 								<Space>
+									<p className='tw-text-white tw-text-nowrap tw-font-semibold tw-text-lg'>{authenticatedUser && authenticatedUser.username}</p>
 									<FiUser className='tw-text-3xl tw-text-white' />
 								</Space>
 							</a>
