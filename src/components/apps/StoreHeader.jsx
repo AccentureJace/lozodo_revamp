@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Col, Row, Input, Badge, Dropdown, Space, Button, Typography } from 'antd';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
 import { FaEdit } from 'react-icons/fa';
@@ -6,7 +7,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import { lozodo_logo } from '../../assets/images';
 import { PATH_CART, PATH_LOGIN, PATH_REGISTER, PRODUCT_DASHBOARD } from '../../constants/routes';
 import { useAuthenticationStore, useCartStore } from '../../store';
-import { useEffect } from 'react';
 import { JWTStorage } from '../../utils';
 import { authService, userService } from '../../services';
 import { useCartHooks } from '../../hooks';
