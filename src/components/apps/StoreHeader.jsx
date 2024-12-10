@@ -2,7 +2,7 @@ import { Col, Row, Input, Badge, Dropdown, Space, Button, Typography } from 'ant
 import { AiOutlineShoppingCart } from 'react-icons/ai';
 import { FaEdit } from 'react-icons/fa';
 import { FiUser } from 'react-icons/fi';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { lozodo_logo } from '../../assets/images';
 import { PATH_CART, PATH_LOGIN, PATH_REGISTER, PRODUCT_DASHBOARD } from '../../constants/routes';
 import { useAuthenticationStore, useCartStore } from '../../store';
@@ -14,6 +14,7 @@ import { useCartHooks } from '../../hooks';
 const StoreHeader = () => {
 	const { itemsInCart } = useCartStore((state) => state);
 	const { authenticatedUser, setAuthenticatedUser } = useAuthenticationStore((state) => state);
+	const navigate = useNavigate();
 	useCartHooks();
 
 	useEffect(() => {
@@ -29,6 +30,8 @@ const StoreHeader = () => {
 
 	const handleLogout = async () => {
 		await authService.logout();
+		setAuthenticatedUser(null);
+		navigate('/');
 	};
 
 	const items = !authenticatedUser
@@ -75,9 +78,11 @@ const StoreHeader = () => {
 				},
 				{
 					label: (
-						<Button color='default' variant='text' className='tw-flex tw-w-full tw-justify-start' onClick={handleLogout}>
-							<FaEdit className='tw-text-sm tw-text-black' /> Sign-out
-						</Button>
+						<Link to={PRODUCT_DASHBOARD}>
+							<Button color='default' variant='text' className='tw-flex tw-w-full tw-justify-start' onClick={handleLogout}>
+								<FaEdit className='tw-text-sm tw-text-black' /> Sign-out
+							</Button>
+						</Link>
 					),
 					key: '2',
 				},
@@ -108,7 +113,7 @@ const StoreHeader = () => {
 						>
 							<a onClick={(e) => e.preventDefault()}>
 								<Space>
-									<p className='tw-text-white tw-text-nowrap'>{authenticatedUser && authenticatedUser.username}</p>
+									<p className='tw-text-white tw-text-nowrap tw-font-semibold tw-text-lg'>{authenticatedUser && authenticatedUser.username}</p>
 									<FiUser className='tw-text-3xl tw-text-white' />
 								</Space>
 							</a>
