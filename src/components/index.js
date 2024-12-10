@@ -1,6 +1,6 @@
 import { StoreHeader, StoreFooter } from './apps';
 import { ProductBanner, ProductCard } from './product';
+import {Categories, Sorting} from './categories'
 import { CartCard, CartSummary } from './cart';
-import Categories from './categories/Categories';
 
-export { ProductBanner, ProductCard, StoreHeader, StoreFooter, Categories, CartCard, CartSummary };
+export { ProductBanner, ProductCard, StoreHeader, StoreFooter, Categories, Sorting, CartCard, CartSummary }

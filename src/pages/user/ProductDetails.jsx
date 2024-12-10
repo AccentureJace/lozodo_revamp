@@ -19,12 +19,12 @@ const ProductDetails = () => {
 	const { authenticatedUser } = useAuthenticationStore((state) => state);
 	const { selectedProduct, isLoading, fetchProductById, fetchProductDetailsIfLoggedOut } = useProductHooks();
 
-	useEffect(() => {
-		if (!id) return;
-		//check if user is logged in. if yes, call fetchProductById else fetchProductDetailsIfLoggedOut
-		// fetchProductById(id);
-		fetchProductDetailsIfLoggedOut(id);
-	}, [id]);
+    useEffect(() => {
+        if (!id) return;
+        //check if user is logged in. if yes, call fetchProductById else fetchProductDetailsIfLoggedOut
+        // fetchProductById(id);
+        fetchProductDetailsIfLoggedOut(id);
+    }, [id]);
 
 	const { product_img, product_name, sold, category, price, product_description } = selectedProduct;
 

@@ -4,6 +4,9 @@ import {
 	Signin,
 	Signup,
 	ProductDetails,
+  Checkout,
+  Transaction,
+  Cart                                        
 	Dashboard,
 	AdminUser,
 	Cart,
@@ -14,6 +17,8 @@ import {
 	PRODUCT_DETAILS,
 	PATH_LOGIN,
 	PATH_REGISTER,
+  PATH_PRODUCT_CHECKOUT,
+  PATH_TRANSACTIONS,
 	PATH_CART,
 	PATH_ADMIN_DASHBOARD,
 	PATH_ADMIN_USER,
@@ -36,6 +41,14 @@ export const router = createBrowserRouter([
 				path: PATH_CART,
 				element: <Cart />,
 			},
+      {
+        path: PATH_PRODUCT_CHECKOUT,
+        element: <Checkout />,
+       },
+       {
+         path: PATH_TRANSACTIONS,
+         element: <Transaction />,
+        },
 		],
 	},
 	{
