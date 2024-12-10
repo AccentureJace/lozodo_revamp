@@ -13,6 +13,7 @@ import {
 	PRODUCT_DETAILS,
 	PATH_LOGIN,
 	PATH_REGISTER,
+	PATH_CART,
 	PATH_ADMIN_DASHBOARD,
 	PATH_ADMIN_USER,
 } from '../constants/routes';
@@ -29,6 +30,10 @@ export const router = createBrowserRouter([
 			{
 				path: PRODUCT_DETAILS,
 				element: <ProductDetails />,
+			},
+			{
+				path: PATH_CART,
+				element: <Cart />,
 			},
 		],
 	},
