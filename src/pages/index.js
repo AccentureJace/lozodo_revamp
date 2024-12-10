@@ -1,4 +1,5 @@
+import { AdminDashboard, AdminUser } from './admin';
 import { Signin, Signup } from './auth';
 import { Dashboard, ProductDetails } from './user';
 
-export { Signin, Signup, Dashboard, ProductDetails };
+export { AdminDashboard, AdminUser, Signin, Signup, Dashboard, ProductDetails };

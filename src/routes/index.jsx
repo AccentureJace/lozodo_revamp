@@ -1,13 +1,20 @@
 import { createBrowserRouter } from 'react-router-dom';
-import Dashboard from '../pages/user/Dashboard';
-import ProductDetails from '../pages/user/ProductDetails';
-import { Signin, Signup } from '../pages';
+import {
+	AdminDashboard,
+	Signin,
+	Signup,
+	ProductDetails,
+	Dashboard,
+	AdminUser,
+} from '../pages';
 import { StoreLayout } from '../layout';
 import {
 	PRODUCT_DASHBOARD,
 	PRODUCT_DETAILS,
 	PATH_LOGIN,
 	PATH_REGISTER,
+	PATH_ADMIN_DASHBOARD,
+	PATH_ADMIN_USER,
 } from '../constants/routes';
 
 export const router = createBrowserRouter([
@@ -32,5 +39,13 @@ export const router = createBrowserRouter([
 	{
 		path: PATH_REGISTER,
 		element: <Signup />,
+	},
+	{
+		path: PATH_ADMIN_DASHBOARD,
+		element: <AdminDashboard />,
+	},
+	{
+		path: PATH_ADMIN_USER,
+		element: <AdminUser />,
 	},
 ]);
