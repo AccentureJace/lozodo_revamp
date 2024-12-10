@@ -20,8 +20,14 @@ const StoreHeader = () => {
 	useEffect(() => {
 		if (JWTStorage.getToken()) {
 			const loadUser = async () => {
-				const user = await userService.getUserByUUID();
-				setAuthenticatedUser(user.data);
+				try {
+					const user = await userService.getUserByUUID();
+					if (user.data) {
+						setAuthenticatedUser(user.data);
+					}
+				} catch (error) {
+					toast.error('Error with fetching API');
+				}
 			};
 
 			loadUser();
@@ -34,13 +40,40 @@ const StoreHeader = () => {
 		navigate('/');
 	};
 
-	const items = !authenticatedUser
+	const items = authenticatedUser
 		? [
 				{
 					label: (
+						<Button className='tw-flex tw-w-full tw-justify-start'>
+							<FiUser className='tw-text-sm' />
+							Manage Account
+						</Button>
+					),
+					key: '0',
+				},
+				{
+					label: (
+						<Button className='tw-flex tw-w-full tw-justify-start'>
+							<FaEdit className='tw-text-sm ' /> Change Password
+						</Button>
+					),
+					key: '1',
+				},
+				{
+					label: (
+						<Button className='tw-flex tw-w-full tw-justify-start' onClick={handleLogout}>
+							<FaEdit className='tw-text-sm' /> Sign-out
+						</Button>
+					),
+					key: '2',
+				},
+		  ]
+		: [
+				{
+					label: (
 						<Link to={PATH_LOGIN}>
-							<Button type='primary' className='tw-flex tw-w-full tw-justify-start'>
-								<FiUser className='tw-text-sm tw-text-white' />
+							<Button className='tw-flex tw-w-full tw-justify-start'>
+								<FiUser className='tw-text-sm ' />
 								Sign-in
 							</Button>
 						</Link>
@@ -50,41 +83,12 @@ const StoreHeader = () => {
 				{
 					label: (
 						<Link to={PATH_REGISTER}>
-							<Button color='default' variant='text' className='tw-flex tw-w-full tw-justify-start'>
-								<FaEdit className='tw-text-sm tw-text-black' /> Sign-up{' '}
+							<Button variant='text' className='tw-flex tw-w-full tw-justify-start'>
+								<FaEdit className='tw-text-sm ' /> Sign-up{' '}
 							</Button>
 						</Link>
 					),
 					key: '1',
-				},
-		  ]
-		: [
-				{
-					label: (
-						<Button type='primary' className='tw-flex tw-w-full tw-justify-start'>
-							<FiUser className='tw-text-sm tw-text-white' />
-							Manage Account
-						</Button>
-					),
-					key: '0',
-				},
-				{
-					label: (
-						<Button color='default' variant='text' className='tw-flex tw-w-full tw-justify-start'>
-							<FaEdit className='tw-text-sm tw-text-black' /> Change Password
-						</Button>
-					),
-					key: '1',
-				},
-				{
-					label: (
-						<Link to={PRODUCT_DASHBOARD}>
-							<Button color='default' variant='text' className='tw-flex tw-w-full tw-justify-start' onClick={handleLogout}>
-								<FaEdit className='tw-text-sm tw-text-black' /> Sign-out
-							</Button>
-						</Link>
-					),
-					key: '2',
 				},
 		  ];
 
