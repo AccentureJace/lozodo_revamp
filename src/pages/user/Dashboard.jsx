@@ -10,7 +10,8 @@ import { useProductHooks, useCategoryHooks } from '../../hooks';
 
 const Dashboard = () => {
     const { products, isLoading } = useProductHooks();
-    const { selectedCategory } = useCategoryHooks();
+    const { categories, handleSelectCategory, selectedCategory } =
+        useCategoryHooks();
     let navigate = useNavigate();
 
     const filtered_products = selectedCategory
@@ -26,8 +27,12 @@ const Dashboard = () => {
             ) : (
                 <div className='tw-px-5 tw-py-5'>
                     <ProductBanner />
-                    <Categories />
-                    <Sorting />
+                    <Categories
+                        categories={categories}
+                        handleSelectCategory={handleSelectCategory}
+                        selectedCategory={selectedCategory}
+                    />
+                    <Sorting selectedCategory={selectedCategory} />
                     <Row gutter={16}>
                         {filtered_products.map((product) => (
                             <Col

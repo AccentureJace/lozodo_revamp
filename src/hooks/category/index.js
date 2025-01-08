@@ -4,9 +4,7 @@ import { toast } from 'react-toastify';
 
 export default function useCategoryHooks() {
     const [categories, setCategories] = useState([]);
-    const [selectedCategory, setSelectedCategory] = useState(null);
-    const [sortOption, setSortOption] = useState('Top sales')
-    const [filteredProducts, setFilteredProducts] = useState([]);
+    const [selectedCategory, setSelectedCategory] = useState();
 
     useEffect(() => {
         fetchCategories();
@@ -22,33 +20,14 @@ export default function useCategoryHooks() {
         }
     };
 
-    const handleSelectCategory = (category_id) => {
-        setSelectedCategory(category_id);
+    const handleSelectCategory = (category_name) => {
+        setSelectedCategory(category_name);
     }
 
-    // const handleSortProducts = () => {
-    //     let filtered = selectedCategory
-    //         ? products.filter((product) => product.category_id === selectedCategory)
-    //         : products;
-
-    //     if (sortOption === 'Price low to high') {
-    //         filtered = filtered.sort((a, b) => a.price - b.price);
-    //     } else if (sortOption === 'Price high to low') {
-    //         filtered = filtered.sort((a, b) => b.price - a.price);
-    //     } else if (sortOption === 'Top sales') {
-    //         filtered = filtered.sort((a, b) => b.sold - a.sold);
-    //     }
-
-    //     setFilteredProducts(filtered);
-    // };
 
     return{
         categories,
         selectedCategory,
-        filteredProducts,
-        sortOption,
-        setSortOption,
         handleSelectCategory,
-        // handleSortProducts
     }
 }

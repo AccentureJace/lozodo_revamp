@@ -1,46 +1,41 @@
-import { Select } from 'antd';
+import { Flex, Select } from 'antd';
 import React from 'react';
-import { useCategoryHooks } from '../../hooks';
 
-const Sorting = () => {
-    const { selectedCategory } = useCategoryHooks();
+const Sorting = ({ selectedCategory }) => {
     return (
-        <div className='md:tw-flex tw-justify-between tw-my-8'>
+        <main className='md:tw-flex tw-justify-between tw-my-8'>
             {selectedCategory ? (
-                <>
-                    <p className='tw-font-bold md:tw-text-xl'>
+                <Flex vertical>
+                    <p className='tw-font-bold md:tw-text-xl tw-text-black'>
                         {selectedCategory}
                     </p>
-                    <p className='tw-text-xs md:tw-text-sm'>
+                    <p className='tw-text-sm md:tw-text-base'>
                         {`Showing results for ${selectedCategory}`}
                     </p>
-                </>
+                </Flex>
             ) : (
                 <span></span>
             )}
 
-            <div className='tw-flex tw-gap-3 tw-items-center tw-mt-5 md:tw-mt-0'>
-                <p className='tw-text-sm'>Sort By:</p>
+            <section className='tw-flex tw-gap-3 tw-items-center tw-mt-5 md:tw-mt-0'>
+                <p>Sort By:</p>
                 <Select
                     defaultValue='Top sales'
                     style={{ width: 180 }}
                     options={[
                         {
-                            // value: 'Top sales',
                             label: 'Top sales',
                         },
                         {
-                            // value: 'Price low to high',
                             label: 'Price low to high',
                         },
                         {
-                            // value: 'Price high to low',
                             label: 'Price high to low',
                         },
                     ]}
                 />
-            </div>
-        </div>
+            </section>
+        </main>
     );
 };
 

@@ -1,12 +1,8 @@
 import React from 'react';
 import { Divider, Flex } from 'antd';
 import { BiLeftArrow, BiRightArrow } from 'react-icons/bi';
-import { useCategoryHooks } from '../../hooks';
 
-const Categories = () => {
-    const { categories, handleSelectCategory, selectedCategory } =
-        useCategoryHooks();
-
+const Categories = ({ categories, selectedCategory, handleSelectCategory }) => {
     return (
         <Flex
             vertical
@@ -23,12 +19,12 @@ const Categories = () => {
                         <div
                             key={category.category_id}
                             className={`tw-border tw-border-gray-500 tw-rounded-md tw-px-6 tw-py-2 tw-text-sm tw-font-semibold hover:tw-bg-blue-500 hover:tw-text-white hover:tw-border-none tw-cursor-pointer ${
-                                selectedCategory === category.category_id
+                                selectedCategory === category.category_name
                                     ? 'tw-bg-blue-500 tw-text-white tw-border-none'
                                     : 'tw-border-gray-500'
                             }`}
                             onClick={() =>
-                                handleSelectCategory(category.category_id)
+                                handleSelectCategory(category.category_name)
                             }
                         >
                             {category.category_name}
