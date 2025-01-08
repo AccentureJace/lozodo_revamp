@@ -1,4 +1,4 @@
-import { axios } from '../customAxios';
+import { axios } from '../../axios';
 import { PATH_TRANSACTIONS } from '../../constants/service';
 
 const transactionService = {

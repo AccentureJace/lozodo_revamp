@@ -42,7 +42,9 @@ const cartService = {
 	deleteCart: async (cart_id) => {
 		try {
 			const result = await axios.delete(PATH_DELETE_CART, {
-				cart_id,
+				data: {
+					cart_id,
+				},
 			});
 			return result.data;
 		} catch (error) {

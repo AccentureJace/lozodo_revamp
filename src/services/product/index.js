@@ -1,33 +1,27 @@
-import { axios } from '../customAxios';
+import { axios } from '../../axios';
 import { PATH_PRODUCTS } from '../../constants/service';
+import { handleFormatAmountToPHP } from '../../utils';
 
 const productService = {
 	getAllProducts: async () => {
 		try {
 			const result = await axios.get(PATH_PRODUCTS);
-			return result.data;
+			return result.data.data;
 		} catch (error) {
-			return error;
+			return error.response;
 		}
 	},
 	getProductById: async (product_id) => {
 		try {
 			const result = await axios.get(`${PATH_PRODUCTS}/${product_id}`);
-			return result.data;
+			return result.data.data;
 		} catch (error) {
-			return error;
+			return error.response;
 		}
 	},
 	createProduct: async (product_details) => {
 		try {
-			const {
-				product_name,
-				product_img,
-				product_description,
-				category,
-				price,
-				created_by,
-			} = product_details;
+			const { product_name, product_img, product_description, category, price, created_by } = product_details;
 			const result = await axios.post(PATH_PRODUCTS, {
 				product_name,
 				product_img,
@@ -45,15 +39,7 @@ const productService = {
 	},
 	updateProduct: async (product_id, product_details) => {
 		try {
-			const {
-				product_name,
-				product_img,
-				product_description,
-				category,
-				price,
-				currency,
-				created_by,
-			} = product_details;
+			const { product_name, product_img, product_description, category, price, currency, created_by } = product_details;
 			const result = await axios.put(`${PATH_PRODUCTS}/${product_id}`, {
 				product_name,
 				product_img,
