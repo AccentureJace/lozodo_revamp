@@ -14,10 +14,6 @@ const Dashboard = () => {
         useCategoryHooks();
     let navigate = useNavigate();
 
-    const filtered_products = selectedCategory
-        ? products.filter((product) => product.category_id === selectedCategory)
-        : products;
-
     return (
         <div>
             {isLoading ? (
@@ -34,7 +30,7 @@ const Dashboard = () => {
                     />
                     <Sorting selectedCategory={selectedCategory} />
                     <Row gutter={16}>
-                        {filtered_products.map((product) => (
+                        {products.map((product) => (
                             <Col
                                 key={product.product_id}
                                 className='gutter-row'
