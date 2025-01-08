@@ -1,12 +1,24 @@
 import { createBrowserRouter } from 'react-router-dom';
-import { Dashboard, ProductDetails, Checkout, Signin, Signup } from '../pages';
+import {
+    AdminDashboard,
+    Signin,
+    Signup,
+    ProductDetails,
+    Dashboard,
+    AdminUser,
+    Cart,
+    Transaction,
+} from '../pages';
 import { StoreLayout } from '../layout';
 import {
     PRODUCT_DASHBOARD,
     PRODUCT_DETAILS,
-    PRODUCT_CHECKOUT,
     PATH_LOGIN,
     PATH_REGISTER,
+    PATH_CART,
+    PATH_ADMIN_DASHBOARD,
+    PATH_ADMIN_USER,
+    PATH_TRANSACTIONS,
 } from '../constants/routes';
 
 export const router = createBrowserRouter([
@@ -23,8 +35,12 @@ export const router = createBrowserRouter([
                 element: <ProductDetails />,
             },
             {
-                path: PRODUCT_CHECKOUT,
-                element: <Checkout />,
+                path: PATH_CART,
+                element: <Cart />,
+            },
+            {
+                path: PATH_TRANSACTIONS,
+                element: <Transaction />,
             },
         ],
     },
@@ -35,5 +51,13 @@ export const router = createBrowserRouter([
     {
         path: PATH_REGISTER,
         element: <Signup />,
+    },
+    {
+        path: PATH_ADMIN_DASHBOARD,
+        element: <AdminDashboard />,
+    },
+    {
+        path: PATH_ADMIN_USER,
+        element: <AdminUser />,
     },
 ]);
