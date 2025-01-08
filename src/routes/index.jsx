@@ -6,7 +6,6 @@ import {
     ProductDetails,
     Dashboard,
     AdminUser,
-    Checkout,
     Cart,
 } from '../pages';
 import { StoreLayout } from '../layout';
@@ -16,7 +15,6 @@ import {
     PATH_LOGIN,
     PATH_REGISTER,
     PATH_CART,
-    PATH_PRODUCT_CHECKOUT,
     PATH_ADMIN_DASHBOARD,
     PATH_ADMIN_USER,
 } from '../constants/routes';
@@ -37,10 +35,6 @@ export const router = createBrowserRouter([
             {
                 path: PATH_CART,
                 element: <Cart />,
-            },
-            {
-                path: PATH_PRODUCT_CHECKOUT,
-                element: <Checkout />,
             },
         ],
     },
