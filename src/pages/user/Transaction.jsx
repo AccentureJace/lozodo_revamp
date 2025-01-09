@@ -205,7 +205,7 @@ const Transaction = () => {
                                         align='center'
                                         gap='small'
                                         key={index}
-                                        className='tw-p-5 tw-pt-0'
+                                        className='tw-px-10'
                                     >
                                         <img
                                             src={
