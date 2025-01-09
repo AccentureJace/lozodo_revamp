@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import transactionService from '../../services/transaction';
+import { transactionService } from '../../services/index';
 import { SESSION_TOKEN } from '../../constants/common';
 import { toast } from 'react-toastify';
 
@@ -24,7 +24,6 @@ export default function useTransactionHooks() {
             setTransactions(all_transactions);
         }
     };
-    console.log('transactions: ', transactions);
     return {
         transactions,
     };
