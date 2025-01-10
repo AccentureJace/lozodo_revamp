@@ -1,57 +1,63 @@
 import { createBrowserRouter } from 'react-router-dom';
 import {
-	AdminDashboard,
-	Signin,
-	Signup,
-	ProductDetails,
-	Dashboard,
-	AdminUser,
-	Cart,
+    AdminDashboard,
+    Signin,
+    Signup,
+    ProductDetails,
+    Dashboard,
+    AdminUser,
+    Cart,
+    Transaction,
 } from '../pages';
 import { StoreLayout } from '../layout';
 import {
-	PRODUCT_DASHBOARD,
-	PRODUCT_DETAILS,
-	PATH_LOGIN,
-	PATH_REGISTER,
-	PATH_CART,
-	PATH_ADMIN_DASHBOARD,
-	PATH_ADMIN_USER,
+    PRODUCT_DASHBOARD,
+    PRODUCT_DETAILS,
+    PATH_LOGIN,
+    PATH_REGISTER,
+    PATH_CART,
+    PATH_ADMIN_DASHBOARD,
+    PATH_ADMIN_USER,
+    PATH_TRANSACTIONS,
 } from '../constants/routes';
 
 export const router = createBrowserRouter([
-	{
-		path: PRODUCT_DASHBOARD,
-		element: <StoreLayout />,
-		children: [
-			{
-				path: PRODUCT_DASHBOARD,
-				element: <Dashboard />,
-			},
-			{
-				path: PRODUCT_DETAILS,
-				element: <ProductDetails />,
-			},
-			{
-				path: PATH_CART,
-				element: <Cart />,
-			},
-		],
-	},
-	{
-		path: PATH_LOGIN,
-		element: <Signin />,
-	},
-	{
-		path: PATH_REGISTER,
-		element: <Signup />,
-	},
-	{
-		path: PATH_ADMIN_DASHBOARD,
-		element: <AdminDashboard />,
-	},
-	{
-		path: PATH_ADMIN_USER,
-		element: <AdminUser />,
-	},
+    {
+        path: PRODUCT_DASHBOARD,
+        element: <StoreLayout />,
+        children: [
+            {
+                path: PRODUCT_DASHBOARD,
+                element: <Dashboard />,
+            },
+            {
+                path: PRODUCT_DETAILS,
+                element: <ProductDetails />,
+            },
+            {
+                path: PATH_CART,
+                element: <Cart />,
+            },
+            {
+                path: PATH_TRANSACTIONS,
+                element: <Transaction />,
+            },
+        ],
+    },
+    {
+        path: PATH_LOGIN,
+        element: <Signin />,
+    },
+    {
+        path: PATH_REGISTER,
+        element: <Signup />,
+    },
+    {
+        path: PATH_ADMIN_DASHBOARD,
+        element: <AdminDashboard />,
+    },
+    {
+        path: PATH_ADMIN_USER,
+        element: <AdminUser />,
+    },
 ]);
